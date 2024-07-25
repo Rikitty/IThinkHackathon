@@ -16,6 +16,7 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
+import Link from "next/link";
 
 const signUpSchema = z.object({
   communityName: z.string({ required_error: "Community name required" }),
@@ -127,9 +128,15 @@ export default function SignUpForm() {
         />
 
         <Button type="submit" className="w-full">
-          Sign Up{" "}
+          Create account
         </Button>
       </form>
+      <FormDescription className="text-center my-4">
+        Already have an account?{" "}
+        <Link href="/login" className="text-blue-600">
+          Login
+        </Link>
+      </FormDescription>
     </Form>
   );
 }

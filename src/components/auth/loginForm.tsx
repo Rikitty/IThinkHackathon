@@ -15,6 +15,7 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { Separator } from "../ui/separator";
 
 const loginSchema = z.object({
   // add validation
@@ -22,7 +23,7 @@ const loginSchema = z.object({
     message: "Email is required",
   }),
   // add validation - refine
-  password: z.string().min(4)
+  password: z.string().min(4),
 });
 
 export default function LoginForm() {
@@ -42,7 +43,10 @@ export default function LoginForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 flex flex-col items-center">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-8 flex flex-col items-center"
+      >
         <FormField
           control={form.control}
           name="email"
@@ -56,28 +60,27 @@ export default function LoginForm() {
             </FormItem>
           )}
         />
-         <FormField
+        <FormField
           control={form.control}
           name="password"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="" {...field} type="password"/>
+                <Input placeholder="" {...field} type="password" />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" size={"lg"} className="w-3/4">Login</Button>
+        <Button type="submit" size={"lg"} className="w-3/4">
+          Login
+        </Button>
       </form>
-
-        <div className="p-24 flex items-center flex-col space-y-8">
-          <Button>Login with Github</Button>
-          <Button>Login with Google</Button>
-        </div>
-
-
+      <Separator className="my-6" />
+      <div className="p-2 flex items-center flex-col">
+        <Button>Login with Google</Button>
+      </div>
     </Form>
   );
 }
