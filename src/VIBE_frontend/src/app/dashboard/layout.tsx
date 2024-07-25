@@ -16,7 +16,7 @@ export default function DashboardLayout({
       {/* Left Sidebar */}
       <div className="w-1/6 p-4 bg-gray-800 flex flex-col items-center">
         <div className="mb-4">
-          <Button onClick={() => router.push('/create')} className="w-full bg-yellow-500 hover:bg-yellow-600">Create</Button>
+          <Button onClick={() => router.push('/dashboard/create')} className="w-full bg-yellow-500 hover:bg-yellow-600">Create</Button>
         </div>
         <div className="w-full">
           <input

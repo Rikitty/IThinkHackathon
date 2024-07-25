@@ -32,8 +32,6 @@ export default function CreateForm() {
   const form = useForm<FormValues>({
     resolver: zodResolver(createSchema),
     defaultValues: {
-      title: "",
-      location: "",
       startDate: startOfToday(),
       endDate: endOfToday(),
       imageUrl: "",
@@ -81,7 +79,7 @@ export default function CreateForm() {
               <FormLabel>Description</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder="Tell us a little bit about yourself"
+                  placeholder="Tell us about the event"
                   className="resize-none"
                   {...field}
                 />
@@ -147,7 +145,9 @@ export default function CreateForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Create Event</Button>
+        <div className="flex justify-center mt-8">
+          <Button type="submit">Create Event</Button>
+        </div>
       </form>
     </Form>
   );
