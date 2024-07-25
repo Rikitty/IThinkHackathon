@@ -18,7 +18,7 @@ export default function Create() {
             </CardTitle>
           </CardHeader>
           <CardContent className="flex items-center flex-col">
-            <CreateForm />
+            <CreateForm />{" "}
           </CardContent>
         </Card>
       </div>
