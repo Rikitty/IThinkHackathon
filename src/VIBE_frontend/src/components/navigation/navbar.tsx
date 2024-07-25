@@ -28,16 +28,16 @@ export default function NavigationBar() {
             <NavigationMenu className="flex space-x-4">
                 <NavigationMenuList className="flex flex-row space-x-4">
                 <NavigationMenuItem>
-                    <Link href={"/auth/login"}>Home</Link>
+                    <Link href={"/dashboard"}>Home</Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                    <Link href={"/auth/signup"}>Liked</Link>
+                    <Link href={"/dashboard/liked"}>Liked</Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                    <Link href={"/auth/login"}>Notification</Link>
+                    <Link href={"/dashboard/notification"}>Notification</Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                    <Link href={"/auth/login"}>Profile</Link>
+                    <Link href={"/dashboard/profile"}>Profile</Link>
                 </NavigationMenuItem>
                 </NavigationMenuList>
             </NavigationMenu>
