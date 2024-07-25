@@ -1,0 +1,36 @@
+{
+  "canisters": {
+    "VIBE_backend": {
+      "build": "npx azle VIBE_backend",
+      "candid": "src/VIBE_backend/VIBE_backend.did",
+      "gzip": true,
+      "main": "src/VIBE_backend/src/index.ts",
+      "tech_stack": {
+        "cdk": {
+          "azle": {}
+        },
+        "language": {
+          "javascript": {},
+          "typescript": {}
+        }
+      },
+      "type": "custom",
+      "wasm": ".azle/VIBE_backend/VIBE_backend.wasm"
+    },
+    "app": {
+        "frontend": {
+          "entrypoint": "out/index.html"
+        },
+        "source": ["out"],
+        "type": "assets"
+      }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
