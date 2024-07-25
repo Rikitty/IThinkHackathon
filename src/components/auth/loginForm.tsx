@@ -16,23 +16,25 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 
-const formSchema = z.object({
+const loginSchema = z.object({
+  // add validation
   email: z.string().email({
     message: "Email is required",
   }),
-  password: z.string()
+  // add validation - refine
+  password: z.string().min(4)
 });
 
 export default function LoginForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof loginSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
