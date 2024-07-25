@@ -1,3 +1,4 @@
+import LoginForm from "@/components/auth/loginForm";
 import {
   Card,
   CardContent,
@@ -15,18 +16,13 @@ export default function Login() {
       <div className="flex-1 min-h-80">
         <Card className="w-96">
           <CardHeader className="flex items-center">
-            <CardTitle>
-              <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
-                Login
-              </h2>
+            <CardTitle className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+              Login
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <p>Card Content</p>
+          <CardContent className="flex items-center flex-col">
+            <LoginForm />
           </CardContent>
-          <CardFooter>
-            <p>Card Footer</p>
-          </CardFooter>
         </Card>
       </div>
     </div>
