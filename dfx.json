@@ -17,16 +17,13 @@
       "type": "custom",
       "wasm": ".azle/VIBE_backend/VIBE_backend.wasm"
     },
-    "VIBE_frontend": {
-      "dependencies": [
-        "VIBE_backend"
-      ],
-      "source": [
-        "src/VIBE_frontend/dist"
-      ],
-      "type": "assets",
-      "workspace": "VIBE_frontend"
-    }
+    "app": {
+        "frontend": {
+          "entrypoint": "out/index.html"
+        },
+        "source": ["out"],
+        "type": "assets"
+      }
   },
   "defaults": {
     "build": {
