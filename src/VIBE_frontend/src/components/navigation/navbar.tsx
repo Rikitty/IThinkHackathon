@@ -15,15 +15,6 @@ export default function NavigationBar() {
   return (
     <>
     <div className="shadow-xl flex justify-between items-center px-6 my-3">
-        <div className="flex space-x-4 my-2">
-          <NavigationMenu className="flex space-x-4">
-            <NavigationMenuList className="flex flex-row space-x-4">
-              <NavigationMenuItem>
-                <Link href={"/dashboard"}>Vibe</Link>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
-        </div>
         <div>
             <NavigationMenu className="flex space-x-4">
                 <NavigationMenuList className="flex flex-row space-x-4">
