@@ -2,7 +2,6 @@ import SignUpForm from "@/components/auth/signUpForm";
 import {
   Card,
   CardContent,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
