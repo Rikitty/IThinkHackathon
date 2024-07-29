@@ -1,7 +1,9 @@
+/* Import Tailwind CSS directives */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Define custom variables for theming */
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -31,6 +33,7 @@
     --chart-5: 27 87% 67%;
   }
 
+  /* Define dark mode variables */
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
@@ -57,12 +60,13 @@
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
-}
 
-@layer base {
+  /* Apply border styles globally */
   * {
     @apply border-border;
   }
+
+  /* Apply background and text colors globally */
   body {
     @apply bg-background text-foreground;
   }

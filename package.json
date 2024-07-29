@@ -15,5 +15,8 @@
   "workspaces": [
     "src/VIBE_backend",
     "src/VIBE_frontend"
-  ]
+  ],
+  "dependencies": {
+    "next": "^14.2.5"
+  }
 }

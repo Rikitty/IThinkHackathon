@@ -25,7 +25,13 @@ export default function RootLayout({
           "min-h-screen bg-background font-sans antialiased",
           fontSans.variable
         )}
-      >
+
+        style={{
+          backgroundImage: 'url("/assets/background.png")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}      >
         {children}
       </body>
     </html>

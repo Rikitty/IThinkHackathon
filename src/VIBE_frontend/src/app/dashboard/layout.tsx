@@ -12,30 +12,58 @@ export default function DashboardLayout({
   const router = useRouter();
 
   return (
-    <section className="flex h-screen bg-gray-900 text-white">
+    <section className="flex h-screen bg-gray-900 text-white p-4" 
+    style={{
+      backgroundImage: 'url("/assets/background.png")',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      
+}}>
+  
+    {/* I added this for opacity overalay - Alix */}
+    <div className="absolute inset-0 bg-black opacity-10"></div>
+
       {/* Left Sidebar */}
-      <div className="w-1/6 p-4 bg-gray-800 flex flex-col items-center">
-        <div className="mb-4">
-          <Button onClick={() => router.push('/create')} className="w-full bg-yellow-500 hover:bg-yellow-600">Create</Button>
-        </div>
-        <div className="w-full">
-          <input
-            type="text"
-            placeholder="Search"
-            className="w-full p-2 rounded-md bg-gray-700 text-white"
-          />
+      <div className="w-2/6 p-4 flex flex-col items-end">
+
+          <div className="w-full flex flex-col items-center">
+          <div className="flex flex-col items-center p-4 rounded-lg border-2 border-yellow-500">
+            <img src="/assets/6.png" alt="Logo" className="mb-4 w-50 h-48"/>
+            <Button onClick={() => router.push('/create')} className="bg-yellow-500 text-white p-2 rounded-md mb-4 w-32">Create</Button>
+            <div className="flex items-center bg-gray-700 p-2 rounded-md">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 text-white mr-2"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M12.9 14.32a8 8 0 111.414-1.414l4.285 4.284a1 1 0 01-1.414 1.415l-4.285-4.285zM14 8a6 6 0 11-12 0 6 6 0 0112 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <input
+                type="text"
+                placeholder="Search"
+                className="bg-transparent text-white outline-none"
+              />
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Middle Section */}
-      <div className="w-4/6 p-4 overflow-y-auto bg-gray-700">
+      <div className="w-3/6 p-4 overflow-y-auto bg-opacity-50 rounded-lg border-2 border-yellow-500">
         {children}
       </div>
 
       {/* Right Sidebar */}
-      <div className="w-1/6 p-4 bg-gray-800 flex flex-col items-center">
+      <div className="w-2/6 p-4 flex flex-col items-center">
         <NavigationBar />
       </div>
+      
     </section>
   );
 }

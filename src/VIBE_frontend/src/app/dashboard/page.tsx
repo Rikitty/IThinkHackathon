@@ -9,11 +9,18 @@ const Dashboard: React.FC = () => {
   };
   return (
     <div>
-      <h1>Hello</h1>
-      <div>
+      
+      {/* Chips */}
+      <h1 className='text-lg font-bold p-2'>Hello, World!</h1>
+      <div className='flex justify-center mt-4'>
         {chips.map((chip, index) => (
           <Chip key={index} label={chip} onClick={() => handleChipClick(chip)} />
         ))}
+      </div>
+
+      {/* Event Containers */}
+      <div className='p-2 mt-5'>
+        <h1>Next content here</h1>
       </div>
     </div>
   );
