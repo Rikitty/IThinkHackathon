@@ -1,12 +1,18 @@
 .chip {
-    display: inline-block;
-    padding: 10px 15px;
-    margin: 5px;
     background-color: #FFFFFF;
+    border: none;
     border-radius: 25px;
+    cursor: pointer;
+    display: inline-block;
     font-size: 14px;
+    margin: 5px;
+    outline: none;
+    padding: 10px 15px;
+  }
+  .chip:hover {
+    background-color: #d0d0d0;
   }
   .chipText {
-    font-size: 14px; /* Adjust the font size as needed */
-    color: #3886AD;     /* Adjust the text color as needed */
+    color: #3886AD;
+    font-size: 14px;
   }

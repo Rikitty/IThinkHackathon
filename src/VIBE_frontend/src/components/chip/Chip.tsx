@@ -3,13 +3,14 @@ import styles from './Chip.module.css';
 
 interface ChipProps {
   label: string;
+  onClick: () => void;
 }
 
-const Chip: React.FC<ChipProps> = ({ label }) => {
+const Chip: React.FC<ChipProps> = ({ label, onClick }) => {
   return (
-    <div className={styles.chip}>
+    <button className={styles.chip} onClick={onClick}>
       <span className={styles.chipText}>{label}</span>
-    </div>
+    </button>
   );
 };
 
