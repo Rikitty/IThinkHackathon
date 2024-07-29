@@ -1,0 +1,12 @@
+.chip {
+    display: inline-block;
+    padding: 10px 15px;
+    margin: 5px;
+    background-color: #FFFFFF;
+    border-radius: 25px;
+    font-size: 14px;
+  }
+  .chipText {
+    font-size: 14px; /* Adjust the font size as needed */
+    color: #3886AD;     /* Adjust the text color as needed */
+  }
