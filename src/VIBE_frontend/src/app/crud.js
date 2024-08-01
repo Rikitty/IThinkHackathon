@@ -24,21 +24,16 @@ function getDataFromLocalStorage() {
     const dataString = localStorage.getItem('data');
     return dataString ? JSON.parse(dataString) : [];
 }
-/* Sample data
-const initialData = [
-  {
-    username: "user1",
-    event_message: "Message 1",
-    image: [],
-    clip: []
-  },
-  {
-    username: "user2",
-    event_message: "Message 2",
-    image: [],
-    clip: []
-  }
-];
-saveDataToLocalStorage(initialData);
-const storedData = getDataFromLocalStorage();
-*/
+
+function deleteAllDataFromLocalStorage() {
+  localStorage.clear();
+}
+
+module.exports = {
+  saveDataToLocalStorage,
+  addDataToLocalStorage,
+  modifyDataInLocalStorage,
+  deleteDataFromLocalStorage,
+  getDataFromLocalStorage,
+  deleteAllDataFromLocalStorage
+};
