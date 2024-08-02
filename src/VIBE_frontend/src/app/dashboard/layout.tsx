@@ -28,8 +28,9 @@ export default function DashboardLayout({
       <div className="w-2/6 p-4 flex flex-col items-end">
 
           <div className="w-full flex flex-col items-center">
+          <img src="/assets/6.png" alt="Logo" className="mb-4 w-50 h-48"/>
+
           <div className="flex flex-col items-center p-4 rounded-lg border-2 border-yellow-500">
-            <img src="/assets/6.png" alt="Logo" className="mb-4 w-50 h-48"/>
             <Button onClick={() => router.push('/create')} className="bg-yellow-500 text-white p-2 rounded-md mb-4 w-32">Create</Button>
             <div className="flex items-center bg-gray-700 p-2 rounded-md">
               <svg

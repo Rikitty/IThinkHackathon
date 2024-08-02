@@ -8,9 +8,9 @@ const Notification: React.FC = () => {
     alert(`Chip clicked: ${chip}`);
   };
   return (
-    <div>
-      <h1>Notification</h1>
-      <div>
+    <div className='text-lg m-2'>
+      <h1 className='font-bold'>Notification</h1>
+      <div className='flex justify-center mt-4'>
         {chips.map((chip, index) => (
           <Chip key={index} label={chip} onClick={() => handleChipClick(chip)} />
         ))}
