@@ -1,22 +1,33 @@
-// import { Canister, query, text } from 'azle';
-
-// export default Canister({
-//     greet: query([text], text, (name) => {
-//         return `Hello, ${name}!`;
-//     })
-// })
-
 import 'dotenv/config'; // Load environment variables
 import { PrismaClient } from '@prisma/client';
 import * as express from 'express';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
+import { Request, Response, NextFunction } from 'express';
 
 const prisma = new PrismaClient();
 const app = express();
 app.use(express.json());
 
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY || 'default_secret_key';
+
+interface AuthenticatedRequest extends Request {
+  userId?: number;
+}
+
+const authenticateToken = (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (!token) return res.status(401).json({ error: 'No token provided' });
+
+  jwt.verify(token, JWT_SECRET_KEY, (err, decoded: any) => {
+    if (err) return res.status(403).json({ error: 'Failed to authenticate token' });
+
+    req.userId = decoded.userId;
+    next();
+  });
+};
 
 app.post('/register', async (req, res) => {
   const { communityName, userName, email, password } = req.body;
@@ -63,7 +74,103 @@ app.post('/login', async (req, res) => {
   }
 });
 
+// Create Event
+app.post('/events', authenticateToken, async (req: AuthenticatedRequest, res) => {
+  const { title, location, description, startDate, endDate, imageUrl } = req.body;
+
+  try {
+    const event = await prisma.event.create({
+      data: {
+        title,
+        location,
+        description,
+        startDate: new Date(startDate),
+        endDate: new Date(endDate),
+        imageUrl,
+        user: { connect: { id: req.userId! } },
+      },
+    });
+    res.json(event);
+  } catch (error) {
+    res.status(400).json({ error: 'Event could not be created' });
+  }
+});
+
+// Read All Events
+app.get('/events', async (req, res) => {
+  try {
+    const events = await prisma.event.findMany();
+    res.json(events);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Read Single Event by ID
+app.get('/events/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const event = await prisma.event.findUnique({ where: { id: Number(id) } });
+
+    if (!event) {
+      return res.status(404).json({ error: 'Event not found' });
+    }
+
+    res.json(event);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Update Event
+app.put('/events/:id', authenticateToken, async (req: AuthenticatedRequest, res) => {
+  const { id } = req.params;
+  const { title, location, description, startDate, endDate, imageUrl } = req.body;
+
+  try {
+    const event = await prisma.event.findUnique({ where: { id: Number(id) } });
+
+    if (!event || event.userId !== req.userId) {
+      return res.status(403).json({ error: 'Unauthorized' });
+    }
+
+    const updatedEvent = await prisma.event.update({
+      where: { id: Number(id) },
+      data: {
+        title,
+        location,
+        description,
+        startDate: new Date(startDate),
+        endDate: new Date(endDate),
+        imageUrl,
+      },
+    });
+    res.json(updatedEvent);
+  } catch (error) {
+    res.status(400).json({ error: 'Event could not be updated' });
+  }
+});
+
+// Delete Event
+app.delete('/events/:id', authenticateToken, async (req: AuthenticatedRequest, res) => {
+  const { id } = req.params;
+
+  try {
+    const event = await prisma.event.findUnique({ where: { id: Number(id) } });
+
+    if (!event || event.userId !== req.userId) {
+      return res.status(403).json({ error: 'Unauthorized' });
+    }
+
+    await prisma.event.delete({ where: { id: Number(id) } });
+    res.json({ message: 'Event deleted successfully' });
+  } catch (error) {
+    res.status(400).json({ error: 'Event could not be deleted' });
+  }
+});
+
 app.listen(3000, () => {
   console.log('Server running on http://localhost:3000');
-  console.log(`JWT_SECRET_KEY: ${JWT_SECRET_KEY}`); // Debug the environment variable
+  console.log(`JWT_SECRET_KEY: ${JWT_SECRET_KEY}`);
 });
