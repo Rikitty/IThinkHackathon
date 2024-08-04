@@ -7,6 +7,7 @@ import { useAppDispatch } from "@/lib/hooks";
 import axiosInstance from "@/lib/api/axiosInstance";
 import { login } from "@/lib/features/auth/userSlice";
 import { useToast } from "../ui/use-toast";
+import { useRouter } from "next/navigation";
 
 import {
   Form,
@@ -35,6 +36,7 @@ export default function LoginForm() {
   });
 
   const { toast } = useToast();
+  const router = useRouter();
 
   const dispatch = useAppDispatch();
 
@@ -46,6 +48,9 @@ export default function LoginForm() {
         title: "Login Success!",
         description: `The response JSON ${values} and ${response.data.token}`,
       });
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 3000);
     } catch (error) {
       console.error("Login failed", error);
       toast({
