@@ -3,9 +3,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useAppDispatch } from "@/lib/hooks";
+import { useState } from "react";
 import axiosInstance from "@/lib/api/axiosInstance";
-import { useAuth } from "@/lib/hooks/auth";
+import { useToast } from "../ui/use-toast";
+
 import {
   Form,
   FormControl,
@@ -25,12 +26,14 @@ const signUpSchema = z.object({
   userName: z.string({ required_error: "Username is required" }),
   email: z.string().email({ message: "Email is required" }),
   password: z.string().min(4, { message: "Minimum of 4 characters" }),
-  checked: z.boolean({
-    required_error: "You must agree to the terms and conditions",
-  }),
 });
 
 export default function SignUpForm() {
+  const [checked, setChecked] = useState(false);
+  function handleOnChange() {
+    setChecked((prevState) => !prevState);
+  }
+
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -38,13 +41,26 @@ export default function SignUpForm() {
       userName: "",
       email: "",
       password: "",
-      checked: false,
     },
   });
 
-  function onSubmit(values: z.infer<typeof signUpSchema>) {
-    console.log(values);
-  }
+  const { toast } = useToast();
+
+  const onSubmit = async (values: z.infer<typeof signUpSchema>) => {
+    try {
+      const response = await axiosInstance.post("/register", values);
+      toast({
+        title: "Signup Success!",
+        description: `Welcome, ${response.data.userName}! Your account has been created.`,
+      });
+    } catch (error) {
+      console.error("Signup failed", error);
+      toast({
+        title: "Login Failed!",
+        description: `The response JSON ${values} and ${error}`,
+      });
+    }
+  };
 
   return (
     <Form {...form}>
@@ -104,32 +120,17 @@ export default function SignUpForm() {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="checked"
-          render={({ field }) => (
-            <FormItem className="">
-              <FormControl>
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />{" "}
-                  <label
-                    htmlFor="checked"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    Accept terms and conditions
-                  </label>
-                </div>
-              </FormControl>
+        <div className="flex items-center space-x-2">
+          <Checkbox checked={checked} onCheckedChange={handleOnChange} />
+          <label
+            htmlFor="checked"
+            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          >
+            Accept terms and conditions
+          </label>
+        </div>
 
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <Button type="submit" className="w-full">
+        <Button disabled={!checked} type="submit" className="w-full">
           Create account
         </Button>
       </form>
