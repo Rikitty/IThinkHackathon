@@ -72,7 +72,7 @@ export default function LoginForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Email</FormLabel>
-              <FormControl>
+              <FormControl className="w-[30rem] h-16">
                 <Input placeholder="email@example.com" {...field} />
               </FormControl>
               <FormMessage />
@@ -85,21 +85,24 @@ export default function LoginForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Password</FormLabel>
-              <FormControl>
+              <FormControl className="w-[30rem] h-16">
                 <Input placeholder="password" {...field} type="password" />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" size={"lg"} className="w-3/4">
+        <Button type="submit" size={"lg"} className="w-3/4 bg-yellow-400 h-14 text-lg">
           Login
         </Button>
       </form>
-      <Separator className="my-6" />
-      <div className="p-2 flex items-center flex-col">
-        <Button>Login with Google</Button>
-      </div>
+      <Separator className="my-20" />
+      <div className="p-2 flex items-center flex-col mt-4">
+              <Button className="bg-yellow-400 flex items-center h-12 text-base w-[20rem]">
+                <img src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png" alt="google icon" className="h-10" />
+                Login with Google
+              </Button>
+            </div>
     </Form>
   );
 }
