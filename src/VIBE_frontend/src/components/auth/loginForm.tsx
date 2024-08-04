@@ -3,12 +3,15 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useAppDispatch } from "@/lib/hooks";
+import axiosInstance from "@/lib/api/axiosInstance";
+import { login } from "@/lib/features/auth/userSlice";
+import { useToast } from "../ui/use-toast";
 
 import {
   Form,
   FormControl,
   FormField,
-  FormDescription,
   FormItem,
   FormLabel,
   FormMessage,
@@ -18,12 +21,8 @@ import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 
 const loginSchema = z.object({
-  // add validation
-  email: z.string().email({
-    message: "Email is required",
-  }),
-  // add validation - refine
-  password: z.string().min(4),
+  email: z.string().email({ message: "Email is required" }),
+  password: z.string().min(4, { message: "Minimum of 4 characters" }),
 });
 
 export default function LoginForm() {
@@ -35,11 +34,26 @@ export default function LoginForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof loginSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  const { toast } = useToast();
+
+  const dispatch = useAppDispatch();
+
+  const onSubmit = async (values: z.infer<typeof loginSchema>) => {
+    try {
+      const response = await axiosInstance.post("/login", values);
+      dispatch(login(response.data.token));
+      toast({
+        title: "Login Success!",
+        description: `The response JSON ${values} and ${response.data.token}`,
+      });
+    } catch (error) {
+      console.error("Login failed", error);
+      toast({
+        title: "Login Failed!",
+        description: `The response JSON ${values} and ${error}`,
+      });
+    }
+  };
 
   return (
     <Form {...form}>
@@ -52,9 +66,9 @@ export default function LoginForm() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="email@example.com" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -67,7 +81,7 @@ export default function LoginForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="" {...field} type="password" />
+                <Input placeholder="password" {...field} type="password" />
               </FormControl>
               <FormMessage />
             </FormItem>
