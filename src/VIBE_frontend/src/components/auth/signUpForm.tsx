@@ -66,7 +66,7 @@ export default function SignUpForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 flex flex-col items-center"
+        className="space-y-8 flex flex-col items-start"
       >
         <FormField
           control={form.control}
@@ -74,7 +74,7 @@ export default function SignUpForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Community Name</FormLabel>
-              <FormControl>
+              <FormControl className="w-[25rem] h-12">
                 <Input placeholder="Community Name" {...field} />
               </FormControl>
               <FormMessage />
@@ -87,7 +87,7 @@ export default function SignUpForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Name</FormLabel>
-              <FormControl>
+              <FormControl className="w-[25rem] h-12">
                 <Input placeholder="E.g Arjohn" {...field} />
               </FormControl>
               <FormMessage />
@@ -100,7 +100,7 @@ export default function SignUpForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Email</FormLabel>
-              <FormControl>
+              <FormControl className="w-[25rem] h-12">
                 <Input placeholder="aja@gmail.com" {...field} />
               </FormControl>
               <FormMessage />
@@ -113,14 +113,14 @@ export default function SignUpForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Password</FormLabel>
-              <FormControl>
+              <FormControl className="w-[25rem] h-12">
                 <Input {...field} type="password" />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <div className="flex items-center space-x-2">
+        <div className="flex-1 space-x-2">
           <Checkbox checked={checked} onCheckedChange={handleOnChange} />
           <label
             htmlFor="checked"
@@ -130,9 +130,12 @@ export default function SignUpForm() {
           </label>
         </div>
 
-        <Button disabled={!checked} type="submit" className="w-full">
-          Create account
-        </Button>
+        <div className="flex items-center justify-center w-full">
+          <Button disabled={!checked} type="submit" className="w-2/3 max-w-xs bg-yellow-400">
+            Create account
+          </Button>
+        </div>
+        
       </form>
       <FormDescription className="text-center my-4">
         Already have an account?{" "}
