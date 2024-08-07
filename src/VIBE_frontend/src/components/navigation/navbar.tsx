@@ -1,6 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { GrHomeRounded } from "react-icons/gr";
+import { RiHeart2Line } from "react-icons/ri";
+import { TbSchoolBell } from "react-icons/tb";
+import { FaCircleUser } from "react-icons/fa6";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -18,18 +22,38 @@ export default function NavigationBar() {
         <div>
             <NavigationMenu className="flex space-x-4">
                 <NavigationMenuList className="flex flex-row space-x-4">
-                <NavigationMenuItem>
-                    <Link href={"/dashboard"}>Home</Link>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                    <Link href={"/dashboard/liked"}>Liked</Link>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                    <Link href={"/dashboard/notification"}>Notification</Link>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                    <Link href={"/dashboard/profile"}>Profile</Link>
-                </NavigationMenuItem>
+                    <NavigationMenuItem className="flex flex-col items-center">
+                        <div className="flex justify-center">
+                            <GrHomeRounded color="#FBBC05" />
+                        </div>
+                        <Link className="text-center" href="/dashboard" style={{ color: '#7E7E7E' }}>
+                            Home
+                        </Link>
+                    </NavigationMenuItem>
+                    <NavigationMenuItem className="flex flex-col items-center">
+                        <div className="flex justify-center">
+                            <RiHeart2Line color="#FBBC05" />
+                        </div>
+                        <Link className="text-center" href={"/dashboard/liked"} style={{ color: '#7E7E7E' }}>
+                            Liked
+                        </Link>
+                    </NavigationMenuItem>
+                    <NavigationMenuItem className="flex flex-col items-center">
+                        <div className="flex justify-center">
+                            <TbSchoolBell color="#FBBC05" />
+                        </div>
+                        <Link className="text-center" href={"/dashboard/notification"} style={{ color: '#7E7E7E' }}>
+                            Notification
+                        </Link>
+                    </NavigationMenuItem>
+                    <NavigationMenuItem className="flex flex-col items-center">
+                        <div className="flex justify-center">
+                            <FaCircleUser color="#FBBC05" />
+                        </div>
+                        <Link className="text-center" href={"/dashboard/profile"} style={{ color: '#7E7E7E' }}>
+                            Profile
+                        </Link>
+                    </NavigationMenuItem>
                 </NavigationMenuList>
             </NavigationMenu>
         </div>
