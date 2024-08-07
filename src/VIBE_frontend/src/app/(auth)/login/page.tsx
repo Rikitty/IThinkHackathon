@@ -47,3 +47,5 @@ export default function Login() {
     </div>
   );
 }
+
+// image: ["https://cdn.pixabay.com/photo/2016/09/08/18/45/cube-1655118_640.jpg"],

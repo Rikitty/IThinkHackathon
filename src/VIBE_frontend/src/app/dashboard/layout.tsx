@@ -57,7 +57,7 @@ export default function DashboardLayout({
       </div>
 
       {/* Middle Section */}
-      <div className="w-3/6 p-4 overflow-y-auto bg-opacity-50 rounded-lg border-2 border-yellow-500">
+      <div className="w-3/6 p-4 max-h-screen overflow-auto no-scrollbar bg-opacity-50 rounded-lg border-2 border-yellow-500">
         {children}
       </div>
 

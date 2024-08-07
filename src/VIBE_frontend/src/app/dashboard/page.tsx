@@ -2,26 +2,43 @@
 import React, { useState } from 'react';
 import Chip from '@/components/chip/Chip';
 import crud from '@/app/crud';
+import { GrCalendar, GrLocation } from 'react-icons/gr';
+import { CiHeart } from 'react-icons/ci';
+import { FaHeart } from 'react-icons/fa';
 
 crud.deleteAllDataFromLocalStorage();
 const initialData = [
   {
-    username: "User 1",
-    event_message: "Content description 1",
+    username: "Arduino Day Philippines",
+    event_message: "Celebrate Arduino Day with us at Arduino Day Philippines! Join our community, share your projects, and let's make something amazing together!",
     image: ["https://cdn.pixabay.com/photo/2016/09/08/18/45/cube-1655118_640.jpg"],
-    clip: []
+    clip: [],
+    date: "March 23, 2024",
+    location: "iAcademy"
   },
   {
-    username: "User 2",
-    event_message: "Content description 2",
+    username: "Arduino Day Philippines",
+    event_message: "Celebrate Arduino Day with us at Arduino Day Philippines! Join our community, share your projects, and let's make something amazing together!",
     image: ["https://cdn.pixabay.com/photo/2016/09/08/18/45/cube-1655118_640.jpg"],
-    clip: []
+    clip: [],
+    date: "March 23, 2024",
+    location: "iAcademy"
   },
   {
-    username: "User 3",
-    event_message: "Content description 3",
+    username: "Arduino Day Philippines",
+    event_message: "Celebrate Arduino Day with us at Arduino Day Philippines! Join our community, share your projects, and let's make something amazing together!",
     image: ["https://cdn.pixabay.com/photo/2016/09/08/18/45/cube-1655118_640.jpg"],
-    clip: []
+    clip: [],
+    date: "March 23, 2024",
+    location: "iAcademy"
+  },
+  {
+    username: "Arduino Day Philippines",
+    event_message: "Celebrate Arduino Day with us at Arduino Day Philippines! Join our community, share your projects, and let's make something amazing together!",
+    image: ["https://cdn.pixabay.com/photo/2016/09/08/18/45/cube-1655118_640.jpg"],
+    clip: [],
+    date: "March 23, 2024",
+    location: "iAcademy"
   }
 ];
 crud.saveDataToLocalStorage(initialData);
@@ -34,11 +51,21 @@ const Dashboard: React.FC = () => {
   };
 
   const [likes, setLikes] = useState<number[]>(storedData.map(() => 0));
+  const [liked, setLiked] = useState<boolean[]>(storedData.map(() => false));
 
   const handleLikeClick = (index: number) => {
     const newLikes = [...likes];
-    newLikes[index] += 1;
+    const newLiked = [...liked];
+
+    if (newLiked[index]) {
+      newLikes[index] -= 1;
+    } else {
+      newLikes[index] += 1;
+    }
+    newLiked[index] = !newLiked[index];
+    
     setLikes(newLikes);
+    setLiked(newLiked);
   };
 
   return (
@@ -55,33 +82,42 @@ const Dashboard: React.FC = () => {
       <div className='m-2 mt-7 text-3xl font-bold'>
         <h1>Feed</h1>
       </div>
+          {storedData.map((item: { username: string; event_message: string; image: string[]; date: string; location: string; }, index: number) => (
+            <div key={index} className="m-2 mt-8 p-2 bg-gray-800 bg-opacity-60 rounded-md shadow-lg flex">
+              {/* Event Image */}
+              <div className='w-1/3 p-4 flex justify-center'>
+                {item.image.length > 0 && (
+                  <img src={item.image[0]} alt="Event" className="w-full h-auto rounded-md" />
+                )}
+              </div>
 
-      {storedData.map((item: { username: string; event_message: string; image: string[]; }, index: number) => (
-        <div key={item.username} className="m-2 mt-8 p-5 bg-gray-800 bg-opacity-60 rounded-md shadow-lg">
-          {/* Event header */}
-          <div className='text-xl font-bold text-white'>
-            {item.username}
-          </div>
+              {/* Event Details */}
+              <div className='w-2/3 p-3'>
+                <div className='text-xl font-bold text-white'>
+                  {item.username}
+                </div>
+                <div className='text-sm text-gray-400 flex items-center mt-2'>
+                  <GrCalendar className="mr-1" />{item.date} <GrLocation className="ml-2 mr-1" /> {item.location}
+                </div>
+                <div className='text-sm text-gray-200 mt-2'>
+                  {item.event_message}
+                </div>
 
-          <div className='text-sm text-gray-200'>
-            {item.event_message}
-          </div>
-
-          {/* Event Body Place Image here */}
-          <div className='p-4'>
-            {item.image.length > 0 && (
-              <img src={item.image[0]} alt="Event" className="w-full h-auto rounded-md" />
-            )}
-          </div>
-
-          {/* Event Footer */}
-          <div className='flex justify-between items-center'>
-            <button
-              onClick={() => handleLikeClick(index)}
-              className='bg-blue-500 text-white py-1 px-3 rounded-md'
-            >
-              Like {likes[index]}
-            </button>
+                {/* Event Footer */}
+                <div className='flex justify-between items-center mt-4'>
+                  <button
+                    onClick={() => handleLikeClick(index)}
+                    className='bg-orange-400 text-white py-1 px-3 rounded-md flex items-center'
+                  >
+                    {liked[index] ? <FaHeart className='mr-2' /> : <CiHeart className='mr-2' />} {likes[index]}
+                  </button>
+                  <button
+                    className='bg-yellow-500 text-white py-1 px-3 rounded-md'
+                    onClick={() => alert('Register Now')}
+                  >
+                    REGISTER NOW
+                  </button>
+                </div>
           </div>
         </div>
       ))}
