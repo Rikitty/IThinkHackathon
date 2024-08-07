@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -20,6 +21,7 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
+import { Link } from "lucide-react";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Email is required" }),
@@ -102,7 +104,8 @@ export default function LoginForm() {
                 <img src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png" alt="google icon" className="h-10" />
                 Login with Google
               </Button>
-            </div>
+      </div>
+        
     </Form>
   );
 }

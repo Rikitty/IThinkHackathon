@@ -21,8 +21,9 @@ export default function DashboardLayout({
       
 }}>
   
-    {/* I added this for opacity overalay - Alix */}
-    <div className="absolute inset-0 bg-black opacity-10"></div>
+    {/* I added this for opacity overalay - Alix */} 
+    {/* Cause of not clickable components */}
+    {/* <div className="absolute inset-0 bg-black opacity-10"></div> */}
 
       {/* Left Sidebar */}
       <div className="w-2/6 p-4 flex flex-col items-end">
@@ -31,7 +32,7 @@ export default function DashboardLayout({
           <img src="/assets/6.png" alt="Logo" className="mb-4 w-50 h-48"/>
 
           <div className="flex flex-col items-center p-4 rounded-lg border-2 border-yellow-500">
-            <Button onClick={() => router.push('/create')} className="bg-yellow-500 text-white p-2 rounded-md mb-4 w-32">Create</Button>
+            <Button onClick={() => router.push('/dashboard/create')} className="bg-yellow-500 text-white p-2 rounded-md mb-4 w-32">Create</Button>
             <div className="flex items-center bg-gray-700 p-2 rounded-md">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
