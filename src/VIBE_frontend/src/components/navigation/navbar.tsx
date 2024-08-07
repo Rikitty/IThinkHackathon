@@ -8,14 +8,12 @@ import { FaCircleUser } from "react-icons/fa6";
 import {
   NavigationMenu,
   NavigationMenuList,
-  NavigationMenuItem,
 } from "@/components/ui/navigation-menu";
-import { usePathname } from "next/navigation";  // Correct import for pathname
+import { usePathname } from "next/navigation";
 
 export default function NavigationBar() {
-  const pathname = usePathname();  // Use usePathname instead of useRouter
+  const pathname = usePathname();
 
-  // Helper function to check if a link is active
   const isActive = (path: string) => pathname === path;
 
   return (
@@ -29,15 +27,20 @@ export default function NavigationBar() {
             }`}
           >
             <div className="flex justify-center mb-1">
-              <GrHomeRounded color={isActive("/dashboard") ? "#FFF" : "#FBBC05"} />
+              <GrHomeRounded
+                color={isActive("/dashboard") ? "#FFF" : "#FBBC05"}
+                className="text-xl"  
+              />
             </div>
-            <span
-              className={`text-center ${
-                isActive("/dashboard") ? "text-white" : "text-gray-700"
-              }`}
-            >
-              Home
-            </span>
+            {isActive("/dashboard") && (
+              <span
+                className={`text-center ${
+                  isActive("/dashboard") ? "text-white" : "text-gray-700"
+                }`}
+              >
+                Home
+              </span>
+            )}
           </Link>
           <Link
             href="/dashboard/liked"
@@ -46,15 +49,20 @@ export default function NavigationBar() {
             }`}
           >
             <div className="flex justify-center mb-1">
-              <RiHeart2Line color={isActive("/dashboard/liked") ? "#FFF" : "#FBBC05"} />
+              <RiHeart2Line
+                color={isActive("/dashboard/liked") ? "#FFF" : "#FBBC05"}
+                className="text-3xl"  
+              />
             </div>
-            <span
-              className={`text-center ${
-                isActive("/dashboard/liked") ? "text-white" : "text-gray-700"
-              }`}
-            >
-              Liked
-            </span>
+            {isActive("/dashboard/liked") && (
+              <span
+                className={`text-center ${
+                  isActive("/dashboard/liked") ? "text-white" : "text-gray-700"
+                }`}
+              >
+                Liked
+              </span>
+            )}
           </Link>
           <Link
             href="/dashboard/notification"
@@ -63,15 +71,20 @@ export default function NavigationBar() {
             }`}
           >
             <div className="flex justify-center mb-1">
-              <TbSchoolBell color={isActive("/dashboard/notification") ? "#FFF" : "#FBBC05"} />
+              <TbSchoolBell
+                color={isActive("/dashboard/notification") ? "#FFF" : "#FBBC05"}
+                className="text-3xl"  
+              />
             </div>
-            <span
-              className={`text-center ${
-                isActive("/dashboard/notification") ? "text-white" : "text-gray-700"
-              }`}
-            >
-              Notification
-            </span>
+            {isActive("/dashboard/notification") && (
+              <span
+                className={`text-center ${
+                  isActive("/dashboard/notification") ? "text-white" : "text-gray-700"
+                }`}
+              >
+                Notification
+              </span>
+            )}
           </Link>
           <Link
             href="/dashboard/profile"
@@ -80,15 +93,20 @@ export default function NavigationBar() {
             }`}
           >
             <div className="flex justify-center mb-1">
-              <FaCircleUser color={isActive("/dashboard/profile") ? "#FFF" : "#FBBC05"} />
+              <FaCircleUser
+                color={isActive("/dashboard/profile") ? "#FFF" : "#FBBC05"}
+                className="text-3xl"
+              />
             </div>
-            <span
-              className={`text-center ${
-                isActive("/dashboard/profile") ? "text-white" : "text-gray-700"
-              }`}
-            >
-              Profile
-            </span>
+            {isActive("/dashboard/profile") && (
+              <span
+                className={`text-center ${
+                  isActive("/dashboard/profile") ? "text-white" : "text-gray-700"
+                }`}
+              >
+                Profile
+              </span>
+            )}
           </Link>
         </NavigationMenuList>
       </NavigationMenu>
