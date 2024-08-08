@@ -201,6 +201,97 @@ app.delete(
   }
 );
 
+// Like an event
+app.post(
+  "/events/:id/like",
+  authenticateToken,
+  async (req: AuthenticatedRequest, res) => {
+    const { id } = req.params;
+
+    try {
+      // Check if the like already exists
+      const existingLike = await prisma.like.findUnique({
+        where: {
+          userId_eventId: {
+            userId: req.userId!,
+            eventId: Number(id),
+          },
+        },
+      });
+
+      if (existingLike) {
+        return res.status(400).json({ error: "Event already liked" });
+      }
+
+      // Create a new like
+      const like = await prisma.like.create({
+        data: {
+          userId: req.userId!,
+          eventId: Number(id),
+        },
+      });
+
+      res.json(like);
+    } catch (error) {
+      res.status(500).json({ error: "Internal server error" });
+    }
+  }
+);
+
+// Unlike an event
+app.delete(
+  "/events/:id/unlike",
+  authenticateToken,
+  async (req: AuthenticatedRequest, res) => {
+    const { id } = req.params;
+
+    try {
+      // Find the like
+      const like = await prisma.like.findUnique({
+        where: {
+          userId_eventId: {
+            userId: req.userId!,
+            eventId: Number(id),
+          },
+        },
+      });
+
+      if (!like) {
+        return res.status(404).json({ error: "Like not found" });
+      }
+
+      // Delete the like
+      await prisma.like.delete({
+        where: {
+          userId_eventId: {
+            userId: req.userId!,
+            eventId: Number(id),
+          },
+        },
+      });
+
+      res.json({ message: "Event unliked successfully" });
+    } catch (error) {
+      res.status(500).json({ error: "Internal server error" });
+    }
+  }
+);
+
+// Get likes count for an event
+app.get("/events/:id/likes", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const likesCount = await prisma.like.count({
+      where: { eventId: Number(id) },
+    });
+
+    res.json({ likesCount });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 app.listen(3001, () => {
   console.log("Server running on http://localhost:3001");
   console.log(`JWT_SECRET_KEY: ${JWT_SECRET_KEY}`);

@@ -129,7 +129,6 @@ export default function SignUpForm() {
             Accept terms and conditions
           </label>
         </div>
-
         <div className="flex items-center justify-center w-full">
           <Button disabled={!checked} type="submit" className="w-2/3 max-w-xs bg-yellow-400">
             Create account

@@ -1,6 +1,7 @@
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 generator client {
@@ -8,22 +9,34 @@ generator client {
 }
 
 model User {
-  id           Int      @id @default(autoincrement())
+  id            Int     @id @default(autoincrement())
   communityName String  @db.VarChar(255)
-  userName     String  @db.VarChar(255)
-  email        String  @unique @db.VarChar(255)
-  password     String  @db.VarChar(255)
-  events       Event[] @relation("UserEvents")
+  userName      String  @db.VarChar(255)
+  email         String  @unique @db.VarChar(255)
+  password      String  @db.VarChar(255)
+  events        Event[] @relation("UserEvents")
+  likes         Like[]  @relation("UserLikes")
 }
 
 model Event {
-  id          Int     @id @default(autoincrement())
-  title       String  @db.VarChar(255)
-  location    String  @db.VarChar(255)
-  description String  @db.Text
+  id          Int      @id @default(autoincrement())
+  title       String   @db.VarChar(255)
+  location    String   @db.VarChar(255)
+  description String   @db.Text
   startDate   DateTime
   endDate     DateTime
-  imageUrl    String? @db.VarChar(255)
+  imageUrl    String?  @db.VarChar(255)
   userId      Int
-  user        User    @relation("UserEvents", fields: [userId], references: [id])
+  user        User     @relation("UserEvents", fields: [userId], references: [id])
+  likes       Like[]   @relation("EventLikes")
+}
+
+model Like {
+  id      Int   @id @default(autoincrement())
+  userId  Int
+  user    User  @relation("UserLikes", fields: [userId], references: [id])
+  eventId Int
+  event   Event @relation("EventLikes", fields: [eventId], references: [id])
+
+  @@unique([userId, eventId])
 }
