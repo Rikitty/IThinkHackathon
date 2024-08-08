@@ -48,7 +48,7 @@ export default function LoginForm() {
         title: "Login Success!",
         description: `The response JSON ${JSON.stringify(values)} and ${
           response.data.token
-        }`,
+        }, ${response.data.userId}`,
       });
       setTimeout(() => {
         router.push("/dashboard");
