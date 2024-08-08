@@ -1,21 +1,24 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface UserState {
+  id: number | null;
   token: string | null;
   isAuthenticated: boolean;
 }
 
 const initialState: UserState = {
+  id: null,
   token: null,
   isAuthenticated: false,
 };
 
 const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<string>) => {
-      state.token = action.payload;
+    login: (state, action: PayloadAction<{ id: number; token: string }>) => {
+      state.id = action.payload.id;
+      state.token = action.payload.token;
       state.isAuthenticated = true;
     },
     logout: (state) => {

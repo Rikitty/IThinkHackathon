@@ -16,6 +16,9 @@ import {
 import { Textarea } from "../ui/textarea";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { useToast } from "../ui/use-toast";
+import axiosInstance from "@/lib/api/axiosInstance";
+import { useAppSelector } from "@/lib/hooks";
 
 const createSchema = z.object({
   title: z.string({ required_error: "Title is required" }),
@@ -24,22 +27,38 @@ const createSchema = z.object({
   startDate: z.date({ required_error: "Start date required" }),
   endDate: z.date({ required_error: "End date required" }),
   imageUrl: z.string().optional(),
+  userId: z.number(),
 });
 
 type FormValues = z.infer<typeof createSchema>;
 
 export default function CreateForm() {
+  const userId = useAppSelector((state) => state.user.id);
   const form = useForm<FormValues>({
     resolver: zodResolver(createSchema),
     defaultValues: {
       startDate: startOfToday(),
       endDate: endOfToday(),
       imageUrl: "",
+      userId: userId ?? undefined,
     },
   });
+  const { toast } = useToast();
 
-  function onSubmit(values: FormValues) {
-    console.log(values);
+  async function onSubmit(values: FormValues) {
+    try {
+      const response = await axiosInstance.post("/events", values);
+      toast({
+        title: "Event Created!",
+        description: `Event ${response.data.title} has been created.`,
+      });
+    } catch (error) {
+      console.error("Event Creation failed", error);
+      toast({
+        title: "Event Creation Failed!",
+        description: `The response JSON ${JSON.stringify(values)} and ${error}`
+      });
+    }
   }
 
   return (

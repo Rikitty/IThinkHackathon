@@ -12,7 +12,6 @@ import { useRouter } from "next/navigation";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -21,7 +20,6 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
-import { Link } from "lucide-react";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Email is required" }),
@@ -45,10 +43,12 @@ export default function LoginForm() {
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     try {
       const response = await axiosInstance.post("/login", values);
-      dispatch(login(response.data.token));
+      dispatch(login({ id: response.data.userId, token: response.data.token }));
       toast({
         title: "Login Success!",
-        description: `The response JSON ${values} and ${response.data.token}`,
+        description: `The response JSON ${JSON.stringify(values)} and ${
+          response.data.token
+        }`,
       });
       setTimeout(() => {
         router.push("/dashboard");
@@ -94,18 +94,25 @@ export default function LoginForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" size={"lg"} className="w-3/4 bg-yellow-400 h-14 text-lg">
+        <Button
+          type="submit"
+          size={"lg"}
+          className="w-3/4 bg-yellow-400 h-14 text-lg"
+        >
           Login
         </Button>
       </form>
       <Separator className="my-20" />
       <div className="p-2 flex items-center flex-col mt-4">
-              <Button className="bg-yellow-400 flex items-center h-12 text-base w-[20rem]">
-                <img src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png" alt="google icon" className="h-10" />
-                Login with Google
-              </Button>
+        <Button className="bg-yellow-400 flex items-center h-12 text-base w-[20rem]">
+          <img
+            src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
+            alt="google icon"
+            className="h-10"
+          />
+          Login with Google
+        </Button>
       </div>
-        
     </Form>
   );
 }
