@@ -118,13 +118,16 @@ app.post(
 // Read All Events
 app.get("/events", async (req, res) => {
   try {
-    const events = await prisma.event.findMany();
+    const events = await prisma.event.findMany({
+      include: {
+        likes: true, // Include the likes relationship
+      },
+    });
     res.json(events);
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
 // Read Single Event by ID
 app.get("/events/:id", async (req, res) => {
   const { id } = req.params;
@@ -205,81 +208,81 @@ app.delete(
 // Like an event
 app.post("/events/:id/like", authenticateToken, async (req: AuthenticatedRequest, res) => {
   const { id } = req.params;
-  const userId = req.userId;
-
-  console.log(`Request to like event ${id} by user ${userId}`);
+  const userId = req.userId as number;
 
   try {
-    // Check if the like already exists
     const existingLike = await prisma.like.findUnique({
       where: {
         userId_eventId: {
-          userId: req.userId!,
+          userId,
           eventId: Number(id),
         },
       },
     });
 
     if (existingLike) {
-      console.log("Event already liked");
       return res.status(400).json({ error: "Event already liked" });
     }
 
-    // Create a new like
-    const like = await prisma.like.create({
+    await prisma.like.create({
       data: {
-        userId: req.userId!,
+        userId,
         eventId: Number(id),
       },
     });
 
-    console.log("Like created:", like);
-    res.json(like);
+    // Return the updated event data
+    const updatedEvent = await prisma.event.findUnique({
+      where: { id: Number(id) },
+      include: { likes: true },
+    });
+
+    res.json(updatedEvent);
   } catch (error) {
-    console.error("Error liking event:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
 
-
 // Unlike an event
-app.delete(
-  "/events/:id/unlike",
-  authenticateToken,
-  async (req: AuthenticatedRequest, res) => {
-    const { id } = req.params;
+app.delete("/events/:id/unlike", authenticateToken, async (req: AuthenticatedRequest, res) => {
+  const { id } = req.params;
+  const userId = req.userId as number;
 
-    try {
-      // Find the like
-      const like = await prisma.like.findUnique({
-        where: {
-          userId_eventId: {
-            userId: req.userId!,
-            eventId: Number(id),
-          },
+  try {
+    const like = await prisma.like.findUnique({
+      where: {
+        userId_eventId: {
+          userId,
+          eventId: Number(id),
         },
-      });
+      },
+    });
 
-      if (!like) {
-        return res.status(404).json({ error: "Like not found" });
-      }
-
-      // Delete the like
-      await prisma.like.delete({
-        where: {
-          userId_eventId: {
-            userId: req.userId!,
-            eventId: Number(id),
-          },
-        },
-      });
-
-      res.json({ message: "Event unliked successfully" });
-    } catch (error) {
-      res.status(500).json({ error: "Internal server error" });
+    if (!like) {
+      return res.status(404).json({ error: "Like not found" });
     }
+
+    await prisma.like.delete({
+      where: {
+        userId_eventId: {
+          userId,
+          eventId: Number(id),
+        },
+      },
+    });
+
+    // Return the updated event data
+    const updatedEvent = await prisma.event.findUnique({
+      where: { id: Number(id) },
+      include: { likes: true },
+    });
+
+    res.json(updatedEvent);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
   }
-);
+});
+
 
 // Get likes count for an event
 app.get("/events/:id/likes", async (req, res) => {

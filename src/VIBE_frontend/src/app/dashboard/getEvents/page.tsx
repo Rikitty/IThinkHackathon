@@ -54,6 +54,7 @@ const Dashboard: React.FC = () => {
         // Re-fetch events to update the likes count and liked status
         const data = await response.json();
         console.log("Response data:", data);
+        console.log(eventId);
         setEvents(data);
       }
     } catch (error) {
