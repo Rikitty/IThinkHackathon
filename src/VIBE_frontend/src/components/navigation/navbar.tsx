@@ -87,7 +87,7 @@ export default function NavigationBar() {
             )}
           </Link>
           <Link
-            href="/dashboard/profile"
+            href="/dashboard/getEvents"
             className={`flex flex-col items-center p-3 rounded-full ${
               isActive("/dashboard/profile") ? "bg-yellow-500" : ""
             }`}

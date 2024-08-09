@@ -203,41 +203,44 @@ app.delete(
 );
 
 // Like an event
-app.post(
-  "/events/:id/like",
-  authenticateToken,
-  async (req: AuthenticatedRequest, res) => {
-    const { id } = req.params;
+app.post("/events/:id/like", authenticateToken, async (req: AuthenticatedRequest, res) => {
+  const { id } = req.params;
+  const userId = req.userId;
 
-    try {
-      // Check if the like already exists
-      const existingLike = await prisma.like.findUnique({
-        where: {
-          userId_eventId: {
-            userId: req.userId!,
-            eventId: Number(id),
-          },
-        },
-      });
+  console.log(`Request to like event ${id} by user ${userId}`);
 
-      if (existingLike) {
-        return res.status(400).json({ error: "Event already liked" });
-      }
-
-      // Create a new like
-      const like = await prisma.like.create({
-        data: {
+  try {
+    // Check if the like already exists
+    const existingLike = await prisma.like.findUnique({
+      where: {
+        userId_eventId: {
           userId: req.userId!,
           eventId: Number(id),
         },
-      });
+      },
+    });
 
-      res.json(like);
-    } catch (error) {
-      res.status(500).json({ error: "Internal server error" });
+    if (existingLike) {
+      console.log("Event already liked");
+      return res.status(400).json({ error: "Event already liked" });
     }
+
+    // Create a new like
+    const like = await prisma.like.create({
+      data: {
+        userId: req.userId!,
+        eventId: Number(id),
+      },
+    });
+
+    console.log("Like created:", like);
+    res.json(like);
+  } catch (error) {
+    console.error("Error liking event:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
-);
+});
+
 
 // Unlike an event
 app.delete(
