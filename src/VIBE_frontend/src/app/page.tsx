@@ -11,9 +11,11 @@ export default function Home() {
       <p>Partner In <b>Volunteerism</b></p>
       <p>VIBE (Volunteer Impact Blockchain Ecosystem) tackles the challenge of low volunteer engagement by making volunteering more fun and rewarding. Through a gamified approach, volunteers earn digital tokens for their contributions and task completion. Smart contracts ensure secure and transparent management of both internal funds and crypto donations from supporters. This system benefits everyone involved. Volunteers gain valuable networking opportunities while earning tokens, and organizations can build a strong community by connecting with active volunteers. VIBE essentially hits two birds with one stone – making volunteering enjoyable and fostering stronger connections within the community.</p>
       <p><b>Questions?</b> We're Here to Help</p>
-      <p>Be Heard</p>
-      <Button>Sign up</Button>
-      <p>VeeBy Software Development Services 2024</p>
+      <div className="flex flex-col items-center">
+        <p>Be Heard</p>
+        <Button>Sign up</Button>
+        <p>VeeBy Software Development Services 2024</p>
+      </div>
     </main>
   );
 }
