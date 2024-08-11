@@ -88,6 +88,32 @@ app.post("/login", async (req, res) => {
   }
 });
 
+// Get user details
+app.get("/users/:userId", authenticateToken, async (req: AuthenticatedRequest, res) => {
+  const userId = parseInt(req.params.userId);
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        id: true,
+        communityName: true,
+        userName: true,
+        email: true,
+        // Don't include password for security reasons
+      }
+    });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 // Create Event
 app.post(
   "/events",
@@ -281,6 +307,21 @@ app.delete("/events/:id/unlike", authenticateToken, async (req: AuthenticatedReq
     });
 
     res.json(updatedEvent);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// Get events created by a specific user
+app.get("/users/:userId/events", authenticateToken, async (req: AuthenticatedRequest, res) => {
+  const userId = parseInt(req.params.userId);
+
+  try {
+    const events = await prisma.event.findMany({
+      where: { userId: userId },
+      include: { likes: true },
+    });
+    res.json(events);
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }

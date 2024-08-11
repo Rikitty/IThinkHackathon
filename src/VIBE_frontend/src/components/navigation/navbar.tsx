@@ -65,7 +65,7 @@ export default function NavigationBar() {
             )}
           </Link>
           <Link
-            href="/dashboard/notification"
+            href="/dashboard/getEvents"
             className={`flex flex-col items-center p-3 rounded-full ${
               isActive("/dashboard/notification") ? "bg-yellow-500" : ""
             }`}
@@ -87,7 +87,7 @@ export default function NavigationBar() {
             )}
           </Link>
           <Link
-            href="/dashboard/getEvents"
+            href="/dashboard/profile"
             className={`flex flex-col items-center p-3 rounded-full ${
               isActive("/dashboard/profile") ? "bg-yellow-500" : ""
             }`}
