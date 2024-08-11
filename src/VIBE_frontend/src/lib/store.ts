@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import userReducer from "@/lib/features/auth/userSlice";
-import eventsReducer from "@/lib/features/events/eventsSlice"; // Fix the import typo
+import eventsReducer from "@/lib/features/events/eventsSlice"; 
 
 const persistConfig = {
   key: "user",

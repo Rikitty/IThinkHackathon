@@ -133,7 +133,10 @@ app.get("/events/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
-    const event = await prisma.event.findUnique({ where: { id: Number(id) } });
+    const event = await prisma.event.findUnique({
+      where: { id: Number(id) },
+      include: { likes: true }, // Include likes if necessary
+    });
 
     if (!event) {
       return res.status(404).json({ error: "Event not found" });
@@ -303,3 +306,5 @@ app.listen(3001, () => {
   console.log("Server running on http://localhost:3001");
   console.log(`JWT_SECRET_KEY: ${JWT_SECRET_KEY}`);
 });
+
+
