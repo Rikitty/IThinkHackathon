@@ -76,6 +76,12 @@ const Profile: React.FC = () => {
             <p>Location: {event.location}</p>
             <p>Start Date: {new Date(event.startDate).toLocaleDateString()}</p>
             <p>End Date: {new Date(event.endDate).toLocaleDateString()}</p>
+            <button>
+              <a href={`/dashboard/event/${event.id}/edit`}>Edit</a>
+            </button>
+            <button onClick={() => {}}>
+              Delete
+            </button>
           </div>
         ))}
       </div>
