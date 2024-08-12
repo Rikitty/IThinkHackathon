@@ -37,6 +37,32 @@ const Profile: React.FC = () => {
     alert(`Chip clicked: ${chip}`);
   };
 
+  // Delete event handler
+  const handleDeleteEvent = async (eventId: number) => {
+    const confirmed = window.confirm("Are you sure you want to delete this event?");
+    if (confirmed) {
+      try {
+        const response = await fetch(`http://localhost:3001/events/${eventId}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.ok) {
+          // Re-fetch the user's events after deletion
+          dispatch(fetchUserEvents());
+          alert("Event deleted successfully.");
+        } else {
+          alert("Failed to delete the event.");
+        }
+      } catch (error) {
+        console.error("Error deleting event:", error);
+        alert("An error occurred. Please try again.");
+      }
+    }
+  };
+
   return (
     <div className="text-lg m-2">
       <h1 className="font-bold">Profile</h1>
@@ -56,7 +82,7 @@ const Profile: React.FC = () => {
           <Avatar className="h-16 w-16">
             <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
             <AvatarFallback>CN</AvatarFallback>
-          </Avatar>{" "}
+          </Avatar>
         </div>
         <div className="flex-1 w-2/3">
           <p>Email: {userDetails?.email}</p>
@@ -76,12 +102,14 @@ const Profile: React.FC = () => {
             <p>Location: {event.location}</p>
             <p>Start Date: {new Date(event.startDate).toLocaleDateString()}</p>
             <p>End Date: {new Date(event.endDate).toLocaleDateString()}</p>
-            <button>
-              <a href={`/dashboard/event/${event.id}/edit`}>Edit</a>
-            </button>
-            <button onClick={() => {}}>
-              Delete
-            </button>
+            <div className="flex gap-2">
+              <button>
+                <a href={`/dashboard/event/${event.id}/edit`}>Edit</a>
+              </button>
+              <button onClick={() => handleDeleteEvent(event.id)}>
+                Delete
+              </button>
+            </div>
           </div>
         ))}
       </div>
