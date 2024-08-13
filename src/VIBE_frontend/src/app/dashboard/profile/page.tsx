@@ -9,6 +9,7 @@ import {
 import Chip from "@/components/chip/Chip";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
+import { FaUser } from "react-icons/fa";
 
 const Profile: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -85,6 +86,7 @@ const Profile: React.FC = () => {
           />
         ))}
       </div>
+
       <Separator className="my-4" />
 
       <div className="flex justify-center mt-4">
@@ -98,6 +100,9 @@ const Profile: React.FC = () => {
           <p>Email: {userDetails?.email}</p>
           <p>Username: {userDetails?.userName}</p>
           <p>Community Name: {userDetails?.communityName}</p>
+          <div>
+            <FaUser className="text-2xl text-yellow-500 mt-4" />
+          </div>
         </div>
       </div>
 
@@ -124,7 +129,7 @@ const Profile: React.FC = () => {
         ))}
       </div>
 
-      <h2 className="font-bold mt-4">Liked Events</h2>
+      {/* <h2 className="font-bold mt-4">Liked Events</h2> */}
       <div className="mt-4">
         {userLikedEvents.map((event) => (
           <div key={event.id} className="mb-4 p-4 bg-gray-800 rounded-md">
