@@ -39,22 +39,32 @@ const Profile: React.FC = () => {
 
   // Delete event handler
   const handleDeleteEvent = async (eventId: number) => {
-    const confirmed = window.confirm("Are you sure you want to delete this event?");
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this event?"
+    );
     if (confirmed) {
       try {
-        const response = await fetch(`http://localhost:3001/events/${eventId}`, {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await fetch(
+          `http://localhost:3001/events/${eventId}`,
+          {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const responseData = await response.text();
+        console.log("Response status:", response.status);
+        console.log("Response data:", responseData);
 
         if (response.ok) {
-          // Re-fetch the user's events after deletion
           dispatch(fetchUserEvents());
           alert("Event deleted successfully.");
         } else {
-          alert("Failed to delete the event.");
+          alert(
+            `Failed to delete the event. Status: ${response.status}, Message: ${responseData}`
+          );
         }
       } catch (error) {
         console.error("Error deleting event:", error);

@@ -1,3 +1,5 @@
+"use client"
+
 import EditForm from "@/components/create/editForm";
 import { useParams } from "next/navigation";
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -97,16 +97,20 @@ export default function EditForm({ eventId }: { eventId: number }) {
 
   async function onSubmit(values: FormValues) {
     try {
-      const response = await axiosInstance.put(`/events/${eventId}`, values, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axiosInstance.put(
+        `/events/${eventId}`,
+        values,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       toast({
         title: "Event Updated!",
         description: `Event ${response.data.title} has been updated.`,
       });
-      router.push(`/events/${eventId}`);
+      router.push(`dashboard/events/${eventId}`);
     } catch (error) {
       toast({
         title: "Event Update Failed!",
