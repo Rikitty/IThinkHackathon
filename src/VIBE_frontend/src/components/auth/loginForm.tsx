@@ -53,7 +53,7 @@ export default function LoginForm() {
       setTimeout(() => {
         router.push("/dashboard");
       }, 3000);
-    } catch (error) {
+    } catch (error) { 
       console.error("Login failed", error);
       toast({
         title: "Login Failed!",
