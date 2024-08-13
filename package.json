@@ -17,6 +17,7 @@
     "src/VIBE_frontend"
   ],
   "dependencies": {
+    "@types/redux-persist": "^4.3.1",
     "date-fns": "^3.6.0",
     "dfx": "^0.20.1",
     "next": "^14.2.5",

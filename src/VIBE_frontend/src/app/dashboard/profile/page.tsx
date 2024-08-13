@@ -88,8 +88,8 @@ const Profile: React.FC = () => {
       <Separator className="my-4" />
 
       <div className="flex justify-center mt-4">
-        <div className="flex w-1/3">
-          <Avatar className="h-16 w-16">
+        <div className="flex w-1/3 items-center justify-center">
+          <Avatar className="h-32 w-32">
             <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
@@ -103,7 +103,7 @@ const Profile: React.FC = () => {
 
       <Separator className="my-4" />
 
-      <h2 className="font-bold mt-4">My Events</h2>
+      <h2 className="font-bold mt-4 flex justify-end text-yellow-500"><a href="/dashboard">See all</a></h2>
       <div className="mt-4">
         {userEvents.map((event) => (
           <div key={event.id} className="mb-4 p-4 bg-gray-800 rounded-md">
