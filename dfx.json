@@ -25,6 +25,13 @@
         "type": "assets"
       }
   },
+  "networks": {
+    "local": {
+        "bind": "0.0.0.0:8000",
+        "type": "ephemeral"
+    }
+  },
+
   "defaults": {
     "build": {
       "args": "",
