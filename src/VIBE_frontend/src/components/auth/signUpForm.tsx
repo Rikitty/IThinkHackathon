@@ -56,7 +56,7 @@ export default function SignUpForm() {
     } catch (error) {
       console.error("Signup failed", error);
       toast({
-        title: "Login Failed!",
+        title: "Signup Failed!",
         description: `The response JSON ${values} and ${error}`,
       });
     }

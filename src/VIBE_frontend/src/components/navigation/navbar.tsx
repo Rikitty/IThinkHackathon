@@ -65,7 +65,7 @@ export default function NavigationBar() {
             )}
           </Link>
           <Link
-            href="/dashboard/getEvents"
+            href="/dashboard/notification"
             className={`flex flex-col items-center p-3 rounded-full ${
               isActive("/dashboard/notification") ? "bg-yellow-500" : ""
             }`}

@@ -7,6 +7,16 @@ import {
   fetchUserLikedEvents,
   fetchUserDetails,
 } from "@/lib/features/auth/userSlice";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+
 
 const Liked: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -48,13 +58,34 @@ const Liked: React.FC = () => {
       <h2 className="font-bold mt-4">Liked Events</h2>
       <div className="mt-4">
         {userLikedEvents.map((event) => (
-          <div key={event.id} className="mb-4 p-4 bg-gray-800 rounded-md">
-            <h3 className="text-xl font-bold">{event.title}</h3>
-            <p>{event.description}</p>
-            <p>Location: {event.location}</p>
-            <p>Start Date: {new Date(event.startDate).toLocaleDateString()}</p>
-            <p>End Date: {new Date(event.endDate).toLocaleDateString()}</p>
-          </div>
+          <Card key={event.id} className="w-full">
+            <CardContent>
+              <AspectRatio ratio={16 / 9} className="bg-muted">
+                <img
+                  src={event.imageUrl as string}
+                  alt="Photo by Drew Beamer"
+                  className="rounded-md object-cover"
+                />
+              </AspectRatio>
+              <div className="mb-4 p-4">
+                <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+                  {event.title}
+                </h4>
+                <p className="leading-7 [&:not(:first-child)]:mt-6">
+                  {event.description}
+                </p>
+                <p className="leading-7 [&:not(:first-child)]:mt-6">
+                  Location: {event.location}
+                </p>
+                <p className="leading-7 [&:not(:first-child)]:mt-6">
+                  Start Date: {new Date(event.startDate).toLocaleDateString()}
+                </p>
+                <p className="leading-7 [&:not(:first-child)]:mt-6">
+                  End Date: {new Date(event.endDate).toLocaleDateString()}{" "}
+                </p>
+              </div>
+            </CardContent>
+          </Card>
         ))}
       </div>
     </div>
