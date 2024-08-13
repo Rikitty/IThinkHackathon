@@ -107,7 +107,7 @@ export default function Home() {
         </h2>
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <p className="text-gray-400">Will VIBE solve the module sync issue?</p>
+            <p className="text-gray-400">Will there will be mobile app for user?</p>
             <svg
               className="w-4 h-4 text-gray-400 cursor-pointer ml-auto"
               onClick={() => toggleExpand('question1')}
@@ -125,10 +125,10 @@ export default function Home() {
             </svg>
           </div>
           {isExpanded.question1 && (
-            <p className="text-gray-400 ml-4 flex">Additional info here</p>
+            <p className="text-white-400 ml-4 flex">Yes, VIBE (Volunteer Impact Blockchain Ecosystem) will have a mobile app where users can use the app.</p>
           )}
           <div className="flex items-center justify-between">
-            <p className="text-gray-400">Can other environments sync your token event?</p>
+            <p className="text-gray-400">Can different community can post there event?</p>
             <svg
               className="w-4 h-4 text-gray-400 cursor-pointer ml-auto"
               onClick={() => toggleExpand('question2')}
@@ -146,7 +146,7 @@ export default function Home() {
             </svg>
           </div>
           {isExpanded.question2 && (
-            <p className="text-gray-400 ml-4 flex">Additional info here</p>
+            <p className="text-white-400 ml-4 flex">Yes, VIBE (Volunteer Impact Blockchain Ecosystem) is open to ALL Community</p>
           )}
           <div className="flex items-center justify-between">
             <p className="text-gray-400">How can I get my rewards?</p>
@@ -167,7 +167,7 @@ export default function Home() {
             </svg>
           </div>
           {isExpanded.question3 && (
-            <p className="text-gray-400 ml-4 flex">Additional info here</p>
+            <p className="text-white-400 ml-4 flex">Rewards can be thru token or redeem reward convertible to points.</p>
           )}
         </div>
       </section>
