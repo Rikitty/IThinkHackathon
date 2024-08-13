@@ -195,11 +195,8 @@ export default function Home() {
         <p className="text-gray-300 mt-auto font-normal">
           <em>VeeBy Software Development Services 2024</em>
         </p>
-<<<<<<< HEAD
-=======
 
         <div className="absolute inset-0 z-0 bg-[url('/assets/test.jpg')] bg-center bg-current opacity-30"></div>
->>>>>>> edb22e88542ed6c8f3a3461fdd4fcf2d00750d28
       </footer>
 
     </main>
