@@ -6,21 +6,9 @@ import {
   fetchUserLikedEvents,
   fetchUserDetails,
 } from "@/lib/features/auth/userSlice";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import Chip from "@/components/chip/Chip";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 
 const Profile: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -107,79 +95,32 @@ const Profile: React.FC = () => {
           </Avatar>
         </div>
         <div className="flex-1 w-2/3">
-          <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
-            Username: {userDetails?.userName}
-          </h3>
-          <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-            Community Name: {userDetails?.communityName}{" "}
-          </h4>
+          <p>Email: {userDetails?.email}</p>
+          <p>Username: {userDetails?.userName}</p>
+          <p>Community Name: {userDetails?.communityName}</p>
         </div>
       </div>
 
       <Separator className="my-4" />
 
-      <h2 className="font-bold mt-4 flex justify-end text-yellow-500"><a href="/dashboard">See all</a></h2>
+      <h2 className="font-bold mt-4 flex justify-end"><a href="/dashboard">See all</a></h2>
       <div className="mt-4">
         {userEvents.map((event) => (
-          // Card
-          <Card key={event.id} className="w-full">
-            <CardContent>
-              <AspectRatio ratio={16 / 9} className="bg-muted">
-                <img
-                  src={event.imageUrl as string}
-                  alt="Photo by Drew Beamer"
-                  className="rounded-md object-cover"
-                />
-              </AspectRatio>
-              <div className="mb-4 p-4">
-                <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
-                  {event.title}
-                </h4>
-                <p className="leading-7 [&:not(:first-child)]:mt-6">
-                  {event.description}
-                </p>
-                <p className="leading-7 [&:not(:first-child)]:mt-6">
-                  Location: {event.location}
-                </p>
-                <p className="leading-7 [&:not(:first-child)]:mt-6">
-                  Start Date: {new Date(event.startDate).toLocaleDateString()}
-                </p>
-                <p className="leading-7 [&:not(:first-child)]:mt-6">
-                  End Date: {new Date(event.endDate).toLocaleDateString()}{" "}
-                </p>
-              </div>
-            </CardContent>
-            <CardFooter>
-              <div className="flex justify-between mx-4">
-                <Button asChild>
-                  <Link href={`/dashboard/event/${event.id}/edit`}>Edit</Link>
-                </Button>
-                <Button
-                  variant={"destructive"}
-                  onClick={() => handleDeleteEvent(event.id)}
-                >
-                  Delete
-                </Button>
-              </div>
-            </CardFooter>
-            {/* <div key={event.id} className="mb-4 p-4 bg-gray-800 rounded-md">
-              <h3 className="text-xl font-bold">{event.title}</h3>
-              <p>{event.description}</p>
-              <p>Location: {event.location}</p>
-              <p>
-                Start Date: {new Date(event.startDate).toLocaleDateString()}
-              </p>
-              <p>End Date: {new Date(event.endDate).toLocaleDateString()}</p>
-              <div className="flex gap-2">
-                <button>
-                  <a href={`/dashboard/event/${event.id}/edit`}>Edit</a>
-                </button>
-                <button onClick={() => handleDeleteEvent(event.id)}>
-                  Delete
-                </button>
-              </div>
-            </div> */}
-          </Card>
+          <div key={event.id} className="mb-4 p-4 bg-gray-800 rounded-md">
+            <h3 className="text-xl font-bold">{event.title}</h3>
+            <p>{event.description}</p>
+            <p>Location: {event.location}</p>
+            <p>Start Date: {new Date(event.startDate).toLocaleDateString()}</p>
+            <p>End Date: {new Date(event.endDate).toLocaleDateString()}</p>
+            <div className="flex gap-2">
+              <button>
+                <a href={`/dashboard/event/${event.id}/edit`}>Edit</a>
+              </button>
+              <button onClick={() => handleDeleteEvent(event.id)}>
+                Delete
+              </button>
+            </div>
+          </div>
         ))}
       </div>
 
