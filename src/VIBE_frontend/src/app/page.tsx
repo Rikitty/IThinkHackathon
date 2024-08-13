@@ -2,18 +2,21 @@
 
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+
 
 type QuestionId = 'question1' | 'question2' | 'question3';
 
 export default function Home() {
-  const [timeLeft, setTimeLeft] = useState(24 * 60 * 60); // 24 hours in seconds
+  const [timeLeft, setTimeLeft] = useState(24 * 60 * 60); 
+  const router = useRouter();
 
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
     }, 1000);
 
-    return () => clearInterval(timer); // Cleanup interval on component unmount
+    return () => clearInterval(timer);
   }, []);
 
   // Function to format time
@@ -46,10 +49,16 @@ export default function Home() {
       <header className="w-full flex justify-between items-center px-10">
         <img src="/assets/6.png" alt="VIBE Logo" className="w-48 h-auto" />
         <div className="flex space-x-4">
-          <Button className="h-12 w-24 bg-transparent text-white font-semibold border border-yellow-500 hover:bg-yellow-500 hover:text-black px-4 py-2 rounded transition-colors">
+          <Button 
+            className="h-12 w-24 bg-transparent text-white font-semibold border border-yellow-500 hover:bg-yellow-500 hover:text-black px-4 py-2 rounded transition-colors"
+            onClick={() => router.push('/login')}
+          >
             Login
           </Button>
-          <Button className="h-12 w-24 bg-yellow-500 text-white font-semibold px-4 py-2 rounded hover:bg-yellow-600 hover:text-black transition-colors">
+          <Button 
+            className="h-12 w-24 bg-yellow-500 text-white font-semibold px-4 py-2 rounded hover:bg-yellow-600 hover:text-black transition-colors"
+            onClick={() => router.push('/signup')}
+          >
             Sign up
           </Button>
         </div>
@@ -88,7 +97,6 @@ export default function Home() {
             <p className="text-lg">Username: user3</p>
             <p className="text-gray-300 mt-4">More details about the user's action.</p>
           </div>
-          {/* Add more cards as needed */}
         </div>
       </section>
 
@@ -172,15 +180,14 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="relative text-center flex flex-col items-center justify-between py-8 px-4 min-h-[35rem] w-[1000rem] overflow-hidden bg-center bg-cover bg-no-repeat">
-        {/* Background Image with Opacity */}
-       
+      <footer className="relative text-center flex flex-col items-center justify-between py-8 px-4 min-h-[35rem] w-full overflow-hidden bg-center bg-cover bg-no-repeat">
+        <div className="absolute inset-0 z-0 bg-[url('/assets/test.jpg')] bg-center bg-cover opacity-10"></div>
 
         <div className="relative z-10 flex flex-col items-center">
           <p className="text-6xl font-bold m-20 text-white">
             Be <span className="text-yellow-500">Heard</span>
           </p>
-          <Button className="bg-yellow-500 text-black font-semibold px-4 py-2 rounded mb-6 h-[4rem] w-[12rem] shadow-2xl shadow-black">
+          <Button onClick={() => router.push('/signup')} className="bg-yellow-500 text-black font-semibold px-4 py-2 rounded mb-6 h-[4rem] w-[12rem] shadow-2xl shadow-black">
             Sign up
           </Button>
         </div>
@@ -188,13 +195,7 @@ export default function Home() {
         <p className="text-gray-300 mt-auto font-normal">
           <em>VeeBy Software Development Services 2024</em>
         </p>
-
-        <div className="absolute inset-0 z-0 bg-[url('/assets/test.jpg')] bg-center bg-current opacity-10"></div>
       </footer>
-
-
-
-
 
     </main>
   );
