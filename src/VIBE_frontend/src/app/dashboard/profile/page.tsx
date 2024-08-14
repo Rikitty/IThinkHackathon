@@ -155,18 +155,32 @@ const Profile: React.FC = () => {
       <Separator className="my-10"/>
 
 
-      {/* <h2 className="font-bold mt-4">Liked Events</h2> */}
+      <h2 className="font-bold mt-4 text-2xl text-yellow-500">Certificates</h2>
       <div className="mt-4">
         {userLikedEvents.map((event) => (
-          <div key={event.id} className="mb-4 p-4 bg-gray-800 rounded-md">
-            <h3 className="text-xl font-bold">{event.title}</h3>
-            <p>{event.description}</p>
-            <p>Location: {event.location}</p>
-            <p>Start Date: {new Date(event.startDate).toLocaleDateString()}</p>
-            <p>End Date: {new Date(event.endDate).toLocaleDateString()}</p>
+          <div key={event.id} className="mb-4 bg-gray-800 rounded-lg overflow-hidden flex">
+            {/* Image Section */}
+            <img
+              src={event.imageUrl || 'path/to/default/image.jpg'}
+              alt={event.title}
+              className="w-1/2 h-64 object-cover"
+            />
+            
+            {/* Certificate Details Section */}
+            <div className="w-1/2 p-4 bg-white text-gray-900">
+              <h3 className="text-lg font-bold">{event.title}</h3>
+              <p className="text-sm text-gray-600">{event.location}</p>
+              <p className="mt-4 text-xl font-semibold">CERTIFICATE OF APPRECIATION</p>
+              <p className="mt-2 text-sm text-gray-600">Username: {userDetails?.userName}</p>
+              <div className="flex justify-between mt-8">
+                <p className="text-gray-600">Signed</p>
+                <p className="text-gray-600">Signed</p>
+              </div>
+            </div>
           </div>
-        ))}
-      </div>
+  ))}
+</div>
+
     </div>
   );
 };
