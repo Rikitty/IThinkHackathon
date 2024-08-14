@@ -16,7 +16,7 @@ const initialData = [
     date: "March 23, 2024",
     location: "iAcademy"
   },
-  {
+  { 
     username: "Arduino Day Philippines",
     event_message: "Celebrate Arduino Day with us at Arduino Day Philippines! Join our community, share your projects, and let's make something amazing together!",
     image: ["https://cdn.pixabay.com/photo/2016/09/08/18/45/cube-1655118_640.jpg"],
