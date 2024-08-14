@@ -109,25 +109,51 @@ const Profile: React.FC = () => {
       <Separator className="my-4" />
 
       <h2 className="font-bold mt-4 flex justify-end"><a href="/dashboard">See all</a></h2>
-      <div className="mt-4">
+      <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
         {userEvents.map((event) => (
-          <div key={event.id} className="mb-4 p-4 bg-gray-800 rounded-md">
-            <h3 className="text-xl font-bold">{event.title}</h3>
-            <p>{event.description}</p>
-            <p>Location: {event.location}</p>
-            <p>Start Date: {new Date(event.startDate).toLocaleDateString()}</p>
-            <p>End Date: {new Date(event.endDate).toLocaleDateString()}</p>
-            <div className="flex gap-2">
-              <button>
-                <a href={`/dashboard/event/${event.id}/edit`}>Edit</a>
-              </button>
-              <button onClick={() => handleDeleteEvent(event.id)}>
-                Delete
-              </button>
+          <div
+            key={event.id}
+            className="relative bg-white rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300"
+          >
+            <img
+              src={event.imageUrl || 'path/to/default/image.jpg'}
+              alt={event.title || 'Event image'}
+              className="w-full h-40 object-cover"
+            />
+
+            <div className="p-4">
+              <h3 className="text-lg font-bold text-gray-900">{event.title}</h3>
+              <p className="text-sm text-gray-600 mb-2">
+                <span className="block text-gray-500">{event.location}</span>
+                <span className="block text-gray-500">
+                  {new Date(event.startDate).toLocaleDateString()} -{" "}
+                  {new Date(event.endDate).toLocaleDateString()}
+                </span>
+              </p>
+              <p className="text-sm text-gray-700 mb-4 line-clamp-2">
+                {event.description}
+              </p>
+              <div className="flex justify-between items-center">
+                <a
+                  href={`/dashboard/event/${event.id}/edit`}
+                  className="text-blue-500 font-semibold hover:underline"
+                >
+                  Edit
+                </a>
+                <button
+                  onClick={() => handleDeleteEvent(event.id)}
+                  className="text-red-500 font-semibold hover:underline"
+                >
+                  Delete
+                </button>
+              </div>
             </div>
           </div>
         ))}
       </div>
+
+      <Separator className="my-10"/>
+
 
       {/* <h2 className="font-bold mt-4">Liked Events</h2> */}
       <div className="mt-4">
