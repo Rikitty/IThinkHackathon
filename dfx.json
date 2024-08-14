@@ -1,4 +1,6 @@
 {
+  "dfx": "0.20.1",
+
   "canisters": {
     "VIBE_backend": {
       "build": "npx azle VIBE_backend",
