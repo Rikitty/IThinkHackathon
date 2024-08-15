@@ -9,6 +9,7 @@ import { Calendar } from "../ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
+import { useRouter } from "next/navigation"; // Import useRouter
 
 import {
   Form,
@@ -44,6 +45,7 @@ const createSchema = z
 type FormValues = z.infer<typeof createSchema>;
 
 export default function CreateForm() {
+  const router = useRouter(); // Initialize useRouter
   const userId = useAppSelector((state) => state.user.id);
   const token = useAppSelector((state) => state.user.token);
   const form = useForm<FormValues>({
@@ -68,6 +70,7 @@ export default function CreateForm() {
         title: "Event Created!",
         description: `Event ${response.data.title} has been created.`,
       });
+      router.push('/dashboard'); // Redirect to the dashboard after successful creation
     } catch (error) {
       console.error("Event Creation failed", error);
       toast({

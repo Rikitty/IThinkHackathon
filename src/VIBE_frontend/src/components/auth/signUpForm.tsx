@@ -53,14 +53,15 @@ export default function SignUpForm() {
         title: "Signup Success!",
         description: `Welcome, ${response.data.userName}! Your account has been created.`,
       });
-    } catch (error) {
-      console.error("Signup failed", error);
+    } catch (error: any) {
+      console.error("Signup failed with error:", error.response?.data || error.message);
+  
       toast({
         title: "Signup Failed!",
-        description: `The response JSON ${values} and ${error}`,
+        description: error.response?.data?.error || "An unexpected error occurred. Please try again.",
       });
     }
-  };
+  };  
 
   return (
     <Form {...form}>

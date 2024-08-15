@@ -83,19 +83,19 @@ export default function Home() {
         <h3 className="text-3xl font-light mb-6 flex justify-center">
           Increaser in<span className="mx-2 text-yellow-500">Action</span>
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mx-8 lg:mx-12">
           {/* Repeat for each increaser action card */}
           <div className="bg-gray-500 p-6 rounded-lg shadow-lg">
-            <p className="text-lg">Username: aja102</p>
-            <p className="text-gray-300 mt-4">Some description about the user's action goes here.</p>
+            <p className="text-lg">Mia Wilson</p>
+            <p className="text-gray-300 mt-4">Capability to connect to different social profiles of the volunteer.</p>
           </div>
           <div className="bg-gray-500 p-6 rounded-lg shadow-lg">
-            <p className="text-lg">Username: user2</p>
-            <p className="text-gray-300 mt-4">Another description about the user's action.</p>
+            <p className="text-lg">Ethan Davis</p>
+            <p className="text-gray-300 mt-4">Ensure that the app can handle errors with minimal down time.</p>
           </div>
           <div className="bg-gray-500 p-6 rounded-lg shadow-lg">
-            <p className="text-lg">Username: user3</p>
-            <p className="text-gray-300 mt-4">More details about the user's action.</p>
+            <p className="text-lg">Noah Johnson</p>
+            <p className="text-gray-300 mt-4">Expected to be delivered in a web-based platform then a mobile a version upon gaining some feedback about the website. </p>
           </div>
         </div>
       </section>
@@ -111,7 +111,7 @@ export default function Home() {
       {/* Questions Section */}
       <section className="my-20 mb-40 text-center">
         <h2 className="text-5xl font-bold mb-10">
-          <span className="text-yellow-500">Questions?</span> We're Here to Help
+          <span className="text-yellow-500">Questions?</span> Were Here to Help
         </h2>
         <div className="space-y-4">
           <div className="flex items-center justify-between">

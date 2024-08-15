@@ -155,7 +155,7 @@ const Profile: React.FC = () => {
       <Separator className="my-10"/>
 
 
-      <h2 className="font-bold mt-4 text-2xl text-yellow-500">Certificates</h2>
+      <h2 className="font-bold mt-4 text-2xl text-yellow-500">Favorites</h2>
       <div className="mt-4">
         {userLikedEvents.map((event) => (
           <div key={event.id} className="mb-4 bg-gray-800 rounded-lg overflow-hidden flex">
@@ -167,10 +167,10 @@ const Profile: React.FC = () => {
             />
             
             {/* Certificate Details Section */}
-            <div className="w-1/2 p-4 bg-white text-gray-900">
-              <h3 className="text-lg font-bold">{event.title}</h3>
+            <div className="w-1/2 p-4 bg-white text-gray-900 border-2 border-yellow-500 ">
+              <p className="text-lg font-bold text-yellow-500 ">Event Favorites</p>
               <p className="text-sm text-gray-600">{event.location}</p>
-              <p className="mt-4 text-xl font-semibold">CERTIFICATE OF APPRECIATION</p>
+              <h3 className="mt-4 text-xl font-semibold">{event.title}</h3>
               <p className="mt-2 text-sm text-gray-600">Username: {userDetails?.userName}</p>
               <div className="flex justify-between mt-8">
                 <p className="text-gray-600">Signed</p>

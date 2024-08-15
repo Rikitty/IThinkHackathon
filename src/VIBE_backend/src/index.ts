@@ -45,9 +45,18 @@ const authenticateToken = (
 app.post("/register", async (req, res) => {
   const { communityName, userName, email, password } = req.body;
 
-  const hashedPassword = await bcrypt.hash(password, 10);
+  // Check if all required fields are present
+  if (!communityName || !userName || !email || !password) {
+    return res.status(400).json({ error: "All fields are required." });
+  }
 
   try {
+    const existingUser = await prisma.user.findUnique({ where: { email } });
+    if (existingUser) {
+      return res.status(400).json({ error: "Email is already registered." });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
     const user = await prisma.user.create({
       data: {
         communityName,
@@ -56,9 +65,10 @@ app.post("/register", async (req, res) => {
         password: hashedPassword,
       },
     });
-    res.json(user);
+    res.status(201).json(user); // Use 201 status for successful creation
   } catch (error) {
-    res.status(400).json({ error: "User could not be created" });
+    console.error("Error creating user:", error);
+    res.status(500).json({ error: "Internal server error. Please try again later." });
   }
 });
 
