@@ -111,7 +111,7 @@ export default function EditForm({ eventId }: { eventId: number }) {
         title: "Event Updated!",
         description: `Event ${response.data.title} has been updated.`,
       });
-      router.push(`/dashboard/events/${eventId}`);
+      router.push(`/dashboard`);
     } catch (error) {
       toast({
         title: "Event Update Failed!",
