@@ -25,7 +25,7 @@ interface ExtendedEvent {
   endDate: Date;
   imageUrl: string | null;
   userId: number;
-  likes?: Like[];
+  likes: { userId: number }[];
 }
 
 const Dashboard: React.FC = () => {
