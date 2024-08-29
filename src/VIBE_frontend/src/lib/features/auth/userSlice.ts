@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { Event } from "@prisma/client"; // Assuming you have this type defined
+import { Event } from "@prisma/client"; 
 
 interface UserDetails {
   id: number;
