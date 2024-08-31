@@ -7,21 +7,26 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { FormDescription } from "@/components/ui/form";
-import Link from 'next/link'; // Adjust based on your routing library
+import Link from "next/link"; // Adjust based on your routing library
 
 export default function Login() {
   return (
-    <div className="flex min-h-screen flex-row items-center justify-between p-24 bg-gray-600" style={{
-      backgroundImage: 'url("/assets/background.png")',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat',
-    }}>
+    <div
+      className="flex min-h-screen flex-row items-center justify-between p-24 bg-gray-600"
+      style={{
+        backgroundImage: 'url("/assets/background.png")',
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
       <div className="absolute inset-0 bg-black opacity-50"></div>
 
       <div className="absolute left-56 top-1/4">
-        <h1 className="text-2xl font-normal text-yellow-400"><em>Welcome to</em></h1>
-        <img src="/assets/6.png" alt="Logo" className="mb-4 w-50 h-[23rem]"/>
+        <h1 className="text-2xl font-normal text-yellow-400">
+          <em>Welcome to</em>
+        </h1>
+        <img src="/assets/6.png" alt="Logo" className="mb-4 w-50 h-[23rem]" />
       </div>
 
       <div className="absolute min-h-80 bottom-0 right-56">
@@ -37,7 +42,7 @@ export default function Login() {
           </CardContent>
 
           <div className="text-center my-4">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link href="/signup" className="text-blue-600">
               Sign up
             </Link>
