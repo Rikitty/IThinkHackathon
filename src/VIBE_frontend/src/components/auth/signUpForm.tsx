@@ -48,7 +48,8 @@ export default function SignUpForm() {
 
   const onSubmit = async (values: z.infer<typeof signUpSchema>) => {
     try {
-      const response = await axiosInstance.post("/register", values);
+      const response = await axiosInstance.post("/api/users", values);
+      console.log(response.data); // Debug: Log the response data
       toast({
         title: "Signup Success!",
         description: `Welcome, ${response.data.userName}! Your account has been created.`,

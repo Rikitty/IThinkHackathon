@@ -42,7 +42,7 @@ export default function LoginForm() {
 
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     try {
-      const response = await axiosInstance.post("/login", values);
+      const response = await axiosInstance.post("/api/users", values);
       dispatch(login({ id: response.data.userId, token: response.data.token }));
       toast({
         title: "Login Success!",

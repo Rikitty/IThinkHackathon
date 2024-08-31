@@ -67,7 +67,7 @@ export default function EditForm({ eventId }: { eventId: number }) {
   useEffect(() => {
     async function fetchEvent() {
       try {
-        const response = await axiosInstance.get(`/events/${eventId}`, {
+        const response = await axiosInstance.get(`/api/events/${eventId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -102,7 +102,7 @@ export default function EditForm({ eventId }: { eventId: number }) {
 
   async function onSubmit(values: FormValues) {
     try {
-      const response = await axiosInstance.put(`/events/${eventId}`, values, {
+      const response = await axiosInstance.put(`/api/events/${eventId}`, values, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
