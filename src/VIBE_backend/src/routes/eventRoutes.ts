@@ -41,7 +41,6 @@ eventRoutes.put('/:id', (req: Request, res: Response) => {
   const { title, location, description, startDate, endDate, imageUrl } = req.body;
   const db = getDb();
   try {
-    // Check if the event exists before attempting to update
     const check = db.exec('SELECT COUNT(*) as count FROM Event WHERE id = ?;', [id]);
     const countString = check[0]?.values[0]?.[0] || '0';
     const count = parseInt(countString as string, 10);
@@ -63,7 +62,6 @@ eventRoutes.delete('/:id', (req: Request, res: Response) => {
   const { id } = req.params;
   const db = getDb();
   try {
-    // Check if the event exists before attempting to delete
     const check = db.exec('SELECT COUNT(*) as count FROM Event WHERE id = ?;', [id]);
     const countString = check[0]?.values[0]?.[0] || '0';
     const count = parseInt(countString as string, 10);

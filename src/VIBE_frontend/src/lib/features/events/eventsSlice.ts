@@ -1,5 +1,16 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { Event } from "@prisma/client";
+
+// Define the Event type
+interface Event {
+  id: number;
+  title: string;
+  location: string;
+  description: string;
+  startDate: Date;
+  endDate: Date;
+  imageUrl: string | null;
+  userId: number;
+}
 
 // Define the initial state for the events slice
 interface EventsState {
@@ -18,7 +29,7 @@ const initialState: EventsState = {
 export const fetchEvents = createAsyncThunk<Event[]>(
   "events/fetchEvents",
   async () => {
-    const response = await fetch("http://localhost:3001/events");
+    const response = await fetch("http://localhost:3001/api/events");
     return await response.json();
   }
 );
@@ -31,7 +42,7 @@ export const toggleLikeEvent = createAsyncThunk<
   "events/toggleLikeEvent",
   async ({ eventId, hasLiked, token }, { rejectWithValue }) => {
     try {
-      const url = `http://localhost:3001/events/${eventId}/${
+      const url = `http://localhost:3001/api/events/${eventId}/${
         hasLiked ? "unlike" : "like"
       }`;
       const method = hasLiked ? "DELETE" : "POST";

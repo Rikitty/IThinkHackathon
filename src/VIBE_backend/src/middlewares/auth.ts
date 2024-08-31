@@ -3,6 +3,15 @@ import * as jwt from 'jsonwebtoken';
 
 const secretKey = process.env.JWT_SECRET_KEY || "vibe"; // Replace with your secret key or use environment variables
 
+// Define the 'user' property on the 'Request' type
+declare global {
+  namespace Express {
+    interface Request {
+      user: any;
+    }
+  }
+}
+
 // Middleware to verify the token
 export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers['authorization'];
