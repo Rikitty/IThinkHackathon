@@ -1,8 +1,4 @@
-"use client"
-
 import EditForm from "@/components/create/editForm";
-import { useParams } from "next/navigation";
-
 import {
   Card,
   CardContent,
@@ -23,10 +19,14 @@ const handleChipClick = (chip: string) => {
   alert(`Chip clicked: ${chip}`);
 };
 
-export default function Edit() {
+// This will fetch the data for the event when the page is rendered
+export default async function Edit({ params }: { params: { id: string } }) {
+  // Fetch event data directly in the component
+  const response = await fetch(`http://localhost:3001/api/events/${params.id}`);
+  const event = await response.json();
+
   const { userDetails } = useAppSelector((state) => state.user);
 
-  const { id } = useParams();
   return (
     <div className="flex h-[42rem] flex-col items-center justify-between">
       <div className="flex justify-center mt-4">
@@ -66,65 +66,7 @@ export default function Edit() {
 
         {/* Event Form */}
         <div className="flex flex-col space-y-4">
-          {/* <input
-            type="text"
-            placeholder="Title of your Event"
-            className="w-full p-2 bg-transparent text-white rounded-md placeholder-gray-400"
-          /> */}
-
-          {/* <Separator /> */}
-
-          {/* <textarea
-            placeholder="Write your incoming event"
-            className="w-full p-2 bg-transparent text-white rounded-md placeholder-gray-400"
-            rows={3}
-          /> */}
-
-          {/* Date and Location Inputs */}
-          {/* <div className="flex space-x-2">
-            <div className="flex items-center space-x-2 flex-1">
-              <FaCalendarAlt className="text-yellow-500" />
-              <input
-                type="text"
-                placeholder="Start Date"
-                className="w-full p-2 bg-transparent text-white rounded-md placeholder-gray-400 border-2 border-yellow-500"
-              />
-            </div>
-            <div className="flex items-center space-x-2 flex-1">
-              <FaCalendarAlt className="text-yellow-500" />
-              <input
-                type="text"
-                placeholder="End Date"
-                className="w-full p-2 bg-transparent text-white rounded-md placeholder-gray-400 border-2 border-yellow-500"
-              />
-            </div>
-          </div> */}
-
-          {/* <div className="flex items-center space-x-2">
-            <FaMapMarkerAlt className="text-yellow-500" />
-            <input
-              type="text"
-              placeholder="Location"
-              className="w-full p-2 bg-transparent text-white rounded-md placeholder-gray-400 border-2 border-yellow-500"
-            />
-          </div> */}
-
-          <EditForm eventId={Number(id)} />
-
-          {/* <Separator /> */}
-
-          {/* Image Upload Button */}
-          {/* <div className="flex items-center space-x-2">
-            <button className="flex-1 text-white rounded-md">
-              <FaImage className="text-yellow-500 size-8" />
-            </button>
-
-            <button className="flex justify-center items-end w-1/3 p-2 mt-5 bg-yellow-500 text-white font-bold rounded-3xl mx-full shadow-black shadow-md">
-              Post
-            </button>
-          </div> */}
-
-          {/* Post Button */}
+          <EditForm eventId={event.id} />
         </div>
       </div>
     </div>

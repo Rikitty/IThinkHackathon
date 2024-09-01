@@ -1,21 +1,12 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
-import { GetStaticProps, GetStaticPaths } from "next";
-
+import React from "react";
+import { notFound } from "next/navigation";
 import { GrCalendar, GrLocation } from "react-icons/gr";
 import { CiHeart } from "react-icons/ci";
 import { FaHeart } from "react-icons/fa";
 import Link from "next/link";
-import { useAppSelector } from "@/lib/hooks";
-import Image from "next/image";
 
 interface Like {
   userId: number | null;
-}
-
-interface EventProps {
-  event: ExtendedEvent | null;
 }
 
 interface ExtendedEvent {
@@ -30,81 +21,39 @@ interface ExtendedEvent {
   likes?: Like[] | null;
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
-  const { id } = context.params!;
-
+// Fetch the event data based on ID
+async function fetchEventDetails(eventId: number) {
   try {
-    const res = await fetch(`http://localhost:3001/api/events/${id}`);
-    const event = await res.json();
+    const response = await fetch(`http://localhost:3001/api/events/${eventId}`, {
+      cache: 'no-store', // Disable caching for dynamic data
+    });
 
-    return {
-      props: {
-        event,
-      },
-      revalidate: 10, // In seconds, for ISR (Incremental Static Regeneration)
-    };
+    if (!response.ok) {
+      return null;
+    }
+
+    return response.json();
   } catch (error) {
-    return {
-      notFound: true,
-    };
+    console.error("Error fetching event details:", error);
+    return null;
   }
-};
+}
 
-const SingleEventPage: React.FC = () => {
-  const [event, setEvent] = useState<ExtendedEvent | null>(null);
-  const [hasLiked, setHasLiked] = useState(false);
-  const { id } = useParams(); // Get event ID from dynamic route
-  const userId = useAppSelector((state) => state.user.id);
-  const token = useAppSelector((state) => state.user.token) || "";
+// Generate static params for known paths
+export async function generateStaticParams() {
+  const response = await fetch("http://localhost:3001/api/events");
+  const events = await response.json();
 
-  useEffect(() => {
-    const fetchEventDetails = async (eventId: number) => {
-      try {
-        const response = await fetch(
-          `http://localhost:3001/api/events/${eventId}`
-        );
-        const data = await response.json();
-        console.log(data);
-        setEvent(data);
-        setHasLiked(data.likes.some((like: Like) => like.userId === userId));
-      } catch (error) {
-        console.error("Error fetching event details:", error);
-      }
-    };
-    console.log("ID:", id);
-    console.log("User ID:", userId);
+  return events.map((event: { id: number }) => ({
+    id: event.id.toString(),
+  }));
+}
 
-    if (id) {
-      fetchEventDetails(Number(id));
-    }
-  }, [id, userId]);
-
-  const handleLikeClick = async () => {
-    if (!event) return;
-
-    try {
-      await fetch(`http://localhost:3001/events/${event.id}/like`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ hasLiked }),
-      });
-      setHasLiked(!hasLiked);
-      setEvent({
-        ...event,
-        likes: hasLiked
-          ? event.likes?.filter((like) => like.userId !== userId)
-          : [...(event.likes || []), { userId }],
-      });
-    } catch (error) {
-      console.error("Error liking the event:", error);
-    }
-  };
+const SingleEventPage = async ({ params }: { params: { id: string } }) => {
+  const event = await fetchEventDetails(Number(params.id));
 
   if (!event) {
-    return <div>Loading...</div>;
+    notFound(); // Redirect to 404 if event is not found
   }
 
   return (
@@ -130,15 +79,9 @@ const SingleEventPage: React.FC = () => {
 
         <div className="flex justify-between items-center mt-4">
           <button
-            onClick={handleLikeClick}
             className="bg-orange-400 text-white py-1 px-3 rounded-md flex items-center"
           >
-            {hasLiked ? (
-              <FaHeart className="mr-2" />
-            ) : (
-              <CiHeart className="mr-2" />
-            )}{" "}
-            {event.likes?.length}
+            <CiHeart className="mr-2" /> {event.likes?.length}
           </button>
           <Link
             href="/dashboard"
