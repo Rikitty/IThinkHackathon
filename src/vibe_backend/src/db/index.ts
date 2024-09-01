@@ -6,6 +6,8 @@ import initSqlJs, {
 
 import { migrations } from "./migrations";
 
+let db: Database | null = null;
+
 export async function initDb(
   bytes: Uint8Array = Uint8Array.from([])
 ): Promise<Database> {
@@ -17,6 +19,14 @@ export async function initDb(
     for (const migration of migrations) {
       db.run(migration);
     }
+  }
+
+  return db;
+}
+
+export function getDb(): Database {
+  if (db === null) {
+    throw new Error("Database not initialized");
   }
 
   return db;
