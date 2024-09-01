@@ -1,26 +1,35 @@
-import * as express from 'express';
-import * as bodyParser from 'body-parser';
-import * as cors from 'cors';
-import userRoutes from './routes/userRoutes';
-import eventRoutes from './routes/eventRoutes'; // Import event routes
-import likeRoutes from './routes/likeRoutes'; // Import like routes
+import {
+    init,
+    postUpgrade,
+    preUpgrade,
+    Server,
+    StableBTreeMap,
+    stableJson
+} from 'azle';
+import { Database } from 'sql.js/dist/sql-asm.js';
+
 import { initDb } from './db';
+import { initServer } from './server';
 
-const app = express();
+export let db: Database;
 
-app.use(cors());
-app.use(bodyParser.json());
+let stableDbMap = StableBTreeMap<'DATABASE', Uint8Array>(0, stableJson, {
+    toBytes: (data: Uint8Array) => data,
+    fromBytes: (bytes: Uint8Array) => bytes
+});
 
-app.use('/api/users', userRoutes); // Prefix user routes with /api/users
-app.use('/api/events', eventRoutes); // Prefix event routes with /api/events
-app.use('/api/likes', likeRoutes); // Prefix like routes with /api/likes
-
-const port = process.env.PORT || 3001;
-
-initDb().then(() => {
-  app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
-  });
-}).catch((error) => {
-  console.error('Failed to initialize database:', error);
+export default Server(initServer, {
+    init: init([], async () => {
+        db = await initDb();
+    }),
+    preUpgrade: preUpgrade(() => {
+        stableDbMap.insert('DATABASE', db.export());
+    }),
+    postUpgrade: postUpgrade([], async () => {
+        const database = stableDbMap.get('DATABASE');
+        if (database === null) {
+            throw new Error('Failed to get database');
+        }
+        db = await initDb(database);
+    })
 });
