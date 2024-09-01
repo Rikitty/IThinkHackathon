@@ -7,6 +7,9 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({ type: 'text', unique: true })
+  principal_id: string;
+
   @Column({ type: 'text' })
   communityName: string;
 
