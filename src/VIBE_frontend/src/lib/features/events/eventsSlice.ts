@@ -30,9 +30,13 @@ export const fetchEvents = createAsyncThunk<Event[]>(
   "events/fetchEvents",
   async () => {
     const response = await fetch("http://localhost:3001/api/events");
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
     return await response.json();
   }
 );
+
 
 // Async thunk for toggling like/unlike on an event
 export const toggleLikeEvent = createAsyncThunk<
@@ -55,15 +59,17 @@ export const toggleLikeEvent = createAsyncThunk<
       });
 
       if (!response.ok) {
-        return rejectWithValue("Failed to update like status");
+        throw new Error('Failed to update like status');
       }
 
       return await response.json();
     } catch (error) {
-      return rejectWithValue("Failed to update like status");
+      return rejectWithValue(error.message || 'Failed to update like status');
     }
   }
 );
+
+
 
 const eventsSlice = createSlice({
   name: "events",

@@ -35,7 +35,7 @@ const SingleEventPage: React.FC = () => {
   useEffect(() => {
     const fetchEventDetails = async (eventId: number) => {
       try {
-        const response = await fetch(`http://localhost:3001/events/${eventId}`);
+        const response = await fetch(`http://localhost:3001/api/events/${eventId}`);
         const data = await response.json();
         console.log(data);
         setEvent(data);

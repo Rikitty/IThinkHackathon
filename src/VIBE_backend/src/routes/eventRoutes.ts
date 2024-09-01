@@ -24,6 +24,8 @@ eventRoutes.get('/:id', (req: Request, res: Response) => {
 
 // Create a new event
 eventRoutes.post('/', (req: Request, res: Response) => {
+  console.log(req.body); // Add this line to see the received data
+
   const { title, location, description, startDate, endDate, imageUrl, userId } = req.body;
   const db = getDb();
   try {
@@ -34,6 +36,7 @@ eventRoutes.post('/', (req: Request, res: Response) => {
     res.status(400).send('Error creating event');
   }
 });
+
 
 // Update an event by ID
 eventRoutes.put('/:id', (req: Request, res: Response) => {

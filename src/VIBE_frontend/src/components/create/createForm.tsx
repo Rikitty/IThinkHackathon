@@ -61,7 +61,7 @@ export default function CreateForm() {
 
   async function onSubmit(values: FormValues) {
     try {
-      const response = await axiosInstance.post("/events", values, {
+      const response = await axiosInstance.post("api/events", values, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
