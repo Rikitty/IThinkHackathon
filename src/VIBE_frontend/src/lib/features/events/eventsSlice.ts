@@ -6,8 +6,8 @@ interface Event {
   title: string;
   location: string;
   description: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
   imageUrl: string | null;
   userId: number;
 }
@@ -29,13 +29,21 @@ const initialState: EventsState = {
 export const fetchEvents = createAsyncThunk<Event[]>(
   "events/fetchEvents",
   async () => {
-    const response = await fetch("http://localhost:3001/api/events");
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
+    try {
+      const response = await fetch("http://localhost:3001/api/events");
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      console.log('Fetched events:', data); // Add this line to check the fetched data
+      return data;  
+    } catch (error) {
+      console.error('Error fetching events:', error); // Log any error
+      throw error; // Rethrow to be handled by the thunk
     }
-    return await response.json();
   }
 );
+
 
 
 // Async thunk for toggling like/unlike on an event
@@ -81,31 +89,23 @@ const eventsSlice = createSlice({
       .addCase(fetchEvents.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(
-        fetchEvents.fulfilled,
-        (state, action: PayloadAction<Event[]>) => {
-          state.status = "succeeded";
-          state.events = action.payload;
-        }
-      )
+      .addCase(fetchEvents.fulfilled, (state, action: PayloadAction<Event[]>) => {
+        state.status = "succeeded";
+        state.events = action.payload;
+      })
       .addCase(fetchEvents.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "Failed to fetch events";
       })
 
       // Handle toggleLikeEvent lifecycle
-      .addCase(
-        toggleLikeEvent.fulfilled,
-        (state, action: PayloadAction<Event>) => {
-          const updatedEvent = action.payload;
-          const index = state.events.findIndex(
-            (event) => event.id === updatedEvent.id
-          );
-          if (index !== -1) {
-            state.events[index] = updatedEvent;
-          }
+      .addCase(toggleLikeEvent.fulfilled, (state, action: PayloadAction<Event>) => {
+        const updatedEvent = action.payload;
+        const index = state.events.findIndex(event => event.id === updatedEvent.id);
+        if (index !== -1) {
+          state.events[index] = updatedEvent;
         }
-      )
+      })
       .addCase(toggleLikeEvent.rejected, (state, action) => {
         state.error = action.payload as string;
       });
@@ -113,3 +113,4 @@ const eventsSlice = createSlice({
 });
 
 export default eventsSlice.reducer;
+

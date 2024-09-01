@@ -21,8 +21,8 @@ interface ExtendedEvent {
   title: string;
   location: string;
   description: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
   imageUrl: string | null;
   userId: number;
   likes: { userId: number }[];
