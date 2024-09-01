@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import { GetStaticProps, GetStaticPaths } from "next";
 
 import { GrCalendar, GrLocation } from "react-icons/gr";
 import { CiHeart } from "react-icons/ci";
@@ -11,6 +12,10 @@ import Image from "next/image";
 
 interface Like {
   userId: number | null;
+}
+
+interface EventProps {
+  event: ExtendedEvent | null;
 }
 
 interface ExtendedEvent {
@@ -25,6 +30,26 @@ interface ExtendedEvent {
   likes?: Like[] | null;
 }
 
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { id } = context.params!;
+
+  try {
+    const res = await fetch(`http://localhost:3001/api/events/${id}`);
+    const event = await res.json();
+
+    return {
+      props: {
+        event,
+      },
+      revalidate: 10, // In seconds, for ISR (Incremental Static Regeneration)
+    };
+  } catch (error) {
+    return {
+      notFound: true,
+    };
+  }
+};
+
 const SingleEventPage: React.FC = () => {
   const [event, setEvent] = useState<ExtendedEvent | null>(null);
   const [hasLiked, setHasLiked] = useState(false);
@@ -35,7 +60,9 @@ const SingleEventPage: React.FC = () => {
   useEffect(() => {
     const fetchEventDetails = async (eventId: number) => {
       try {
-        const response = await fetch(`http://localhost:3001/api/events/${eventId}`);
+        const response = await fetch(
+          `http://localhost:3001/api/events/${eventId}`
+        );
         const data = await response.json();
         console.log(data);
         setEvent(data);
