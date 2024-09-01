@@ -42,22 +42,32 @@ export default function LoginForm() {
 
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     try {
-      const response = await axiosInstance.post("/api/users", values);
-      dispatch(login({ id: response.data.userId, token: response.data.token }));
+      // Assuming the login route is `/api/users/login`
+      const response = await axiosInstance.post("/api/users/login", values);
+
+      // Extracting the userId and token from the response
+      const { userId, token } = response.data;
+
+      // Dispatch login action with userId and token
+      dispatch(login({ id: userId, token }));
+
+      // Display success message
       toast({
         title: "Login Success!",
-        description: `The response JSON ${JSON.stringify(values)} and ${
-          response.data.token
-        }, ${response.data.userId}`,
+        description: `Welcome back!`,
       });
+
+      // Redirect to dashboard after 3 seconds
       setTimeout(() => {
         router.push("/dashboard");
       }, 3000);
-    } catch (error) { 
+    } catch (error: any) {
       console.error("Login failed", error);
+
+      // Extract error message and show it in toast
       toast({
         title: "Login Failed!",
-        description: `The response JSON ${values} and ${error}`,
+        description: error.response?.data?.message || "Something went wrong. Please try again.",
       });
     }
   };

@@ -9,6 +9,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "strictPropertyInitialization": false,
+    "useUnknownInCatchVariables": false,
     "paths": {
       "App/*": ["./app/*"],
       "Config/*": ["./config/*"],

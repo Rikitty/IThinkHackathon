@@ -48,21 +48,22 @@ export default function SignUpForm() {
 
   const onSubmit = async (values: z.infer<typeof signUpSchema>) => {
     try {
-      const response = await axiosInstance.post("/api/users", values);
-      console.log(response.data); // Debug: Log the response data
+      console.log("Submitting values:", values); // Log values before sending
+      const response = await axiosInstance.post('/api/users', values);
+      console.log(response.data);
       toast({
         title: "Signup Success!",
         description: `Welcome, ${response.data.userName}! Your account has been created.`,
       });
-    } catch (error: any) {
-      console.error("Signup failed with error:", error.response?.data || error.message);
-  
+    } catch (error) {
+      console.error("Signup failed:", error.response?.data || (error.message as unknown as string));
       toast({
         title: "Signup Failed!",
         description: error.response?.data?.error || "An unexpected error occurred. Please try again.",
       });
     }
-  };  
+  };
+  
 
   return (
     <Form {...form}>
