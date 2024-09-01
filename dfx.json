@@ -3,10 +3,10 @@
 
   "canisters": {
     "VIBE_backend": {
-      "build": "npx azle VIBE_backend",
-      "candid": "src/VIBE_backend/VIBE_backend.did",
+      "build": "npx azle vibe_backend",
+      "candid": "src/vibe_backend/vibe_backend.did",
       "gzip": true,
-      "main": "src/VIBE_backend/src/index.ts",
+      "main": "src/vibe_backend/src/index.ts",
       "tech_stack": {
         "cdk": {
           "azle": {}
@@ -17,7 +17,7 @@
         }
       },
       "type": "custom",
-      "wasm": ".azle/VIBE_backend/VIBE_backend.wasm"
+      "wasm": ".azle/vibe_backend/vibe_backend.wasm"
     },
     "app": {
         "frontend": {
