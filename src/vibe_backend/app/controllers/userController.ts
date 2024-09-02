@@ -6,7 +6,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { ic } from "azle";
 
-const JWT_SECRET = "your_jwt_secret"; // Replace with your actual secret
+const JWT_SECRET = process.env.JWT_SECRET_KEY || "VIBE"; // Replace with your actual secret
 
 export default class UserController {
   static async me(request: Request, response: Response) {
