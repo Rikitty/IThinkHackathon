@@ -3,7 +3,11 @@
     "node": ">=16.0.0",
     "npm": ">=7.0.0"
   },
+<<<<<<< HEAD
   "name": "VIBE",
+=======
+  "name": "vibe",
+>>>>>>> a118206 (Initial commit.)
   "scripts": {
     "build": "npm run build --workspaces --if-present",
     "prebuild": "npm run prebuild --workspaces --if-present",
@@ -13,6 +17,7 @@
   },
   "type": "module",
   "workspaces": [
+<<<<<<< HEAD
     "src/VIBE_backend",
     "src/VIBE_frontend"
   ],
@@ -26,3 +31,9 @@
     "yarn": "^1.22.22"
   }
 }
+=======
+    "src/vibe_backend",
+    "src/vibe_frontend"
+  ]
+}
+>>>>>>> a118206 (Initial commit.)
