@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // Commmented Canister
 
 // import { Canister, query, text } from 'azle';
@@ -168,4 +169,35 @@ export default Some(async (): Promise<void> => {
   init([], initializeServer); 
   preUpgrade(saveDatabase);
   postUpgrade([], reloadDatabase);
+=======
+import initSqlJs from 'sql.js/dist/sql-wasm.js';
+import { Canister, query, text, StableBTreeMap, Some, postUpgrade, stableJson, preUpgrade } from 'azle';
+import { initDb } from "./db";
+import { initServer } from "./server";
+
+export let db: { export: () => Uint8Array; };
+
+let stableDbMap = StableBTreeMap<"DATABASE", Uint8Array>(0, stableJson, {
+  toBytes: (data: Uint8Array) => data,
+  fromBytes: (bytes: Uint8Array) => bytes,
+});
+
+export default initServer({
+  init: async function () {
+    const SQL = await initSqlJs();
+    db = new SQL.Database();
+    await initDb();
+  },
+  preUpgrade: async () => {
+    stableDbMap.insert("DATABASE", db.export());
+  },
+  postUpgrade: async () => {
+    const database = stableDbMap.get("DATABASE");
+    if (database === null) {
+      throw new Error("Failed to get database");
+    }
+    const SQL = await initSqlJs();
+    db = new SQL.Database(database.value);
+  },
+>>>>>>> b983c34 (Rach azle debug)
 });
