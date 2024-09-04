@@ -15,7 +15,7 @@ export default class LikeController {
 
       if (user === null) {
         return response.status(404).json({
-          status: 0,
+          status: 0, 
           message: "User not found.",
         });
       }
@@ -52,7 +52,7 @@ export default class LikeController {
     } catch (error: any) {
       return response.status(400).json({
         status: 0,
-        message: error.message,
+        message: error?.message,
       });
     }
   }
@@ -100,7 +100,7 @@ export default class LikeController {
     } catch (error: any) {
       return response.status(400).json({
         status: 0,
-        message: error.message,
+        message: error?.message,
       });
     }
   }

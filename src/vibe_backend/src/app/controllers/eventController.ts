@@ -12,9 +12,9 @@ export default class EventController {
         request.body
       );
 
-      if (success === null) {
+      if (!success) {
         response.status(400);
-        const { path, message } = (error as any)?.issues?.[0];
+        const { path, message } = error.issues?.[0];
 
         return response.json({
           status: 0,
@@ -35,7 +35,7 @@ export default class EventController {
       }
 
       // check by title since ID is primary generated
-      const findEvent = await Event.findOneBy({ title: data?.title });
+      const findEvent = await Event.findOneBy({ title: data.title });
 
       if (findEvent) {
         response.status(400);
@@ -47,17 +47,17 @@ export default class EventController {
 
       const eventData: Partial<Event> = {
         ...data,
-        startDate: data?.startDate.toString(),
-        endDate: data?.endDate.toString(),
-        user: findUser || undefined,
+        startDate: data.startDate.toString(),
+        endDate: data.endDate.toString(),
+        user: findUser,
       };
 
       await Event.save(eventData);
-    } catch (error) {
+    } catch (error: any) {
       response.status(400);
       return response.json({
         status: "error",
-        message: error.message,
+        message: error?.message,
       });
     }
   }
@@ -96,10 +96,10 @@ export default class EventController {
 
       const findEvent = await Event.findOneBy({
         id: eventId as unknown as number,
-        user: findUser || undefined,
+        user: findUser,
       });
 
-      if (!findEvent) {
+      if (findEvent === null) {
         response.status(400);
         return response.json({
           status: 0,
@@ -131,11 +131,11 @@ export default class EventController {
         status: 1,
         message: "Event updated successfully!",
       });
-    } catch (error) {
+    } catch (error: any) {
       response.status(400);
       return response.json({
         status: 0,
-        message: error.message,
+        message: error?.message,
       });
     }
   }
@@ -149,7 +149,7 @@ export default class EventController {
         principal_id: ic.caller().toText(),
       });
 
-      if (!findUser) {
+      if (findUser === null) {
         response.status(400);
         return response.json({
           status: 0,
@@ -163,7 +163,7 @@ export default class EventController {
         user: findUser,
       });
 
-      if (!findEvent) {
+      if (findEvent === null) {
         response.status(400);
         return response.json({
           status: 0,
@@ -179,11 +179,11 @@ export default class EventController {
         status: 1,
         message: "Event deleted successfully!",
       });
-    } catch (error) {
+    } catch (error: any) {
       response.status(400);
       return response.json({
         status: 0,
-        message: error.message,
+        message: error?.message,
       });
     }
   }
