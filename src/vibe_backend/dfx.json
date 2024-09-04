@@ -1,0 +1,11 @@
+{
+    "canisters": {
+        "install": {
+            "type": "custom",
+            "main": "src/index.ts",
+            "build": "npx azle install",
+            "candid": "src/index.did",
+            "wasm": ".azle/install/install.wasm"
+        }
+    }
+}

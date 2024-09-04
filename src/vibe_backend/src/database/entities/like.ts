@@ -7,6 +7,15 @@ import { Event } from './event';
 })
 @Unique(['user', 'event']) // Composite unique constraint
 export class Like extends BaseEntity {
+  static findOneBy(arg0: { user: any; event: any; }) {
+    throw new Error("Method not implemented.");
+  }
+  save() {
+    throw new Error("Method not implemented.");
+  }
+  static remove(like: any) {
+    throw new Error("Method not implemented.");
+  }
   @PrimaryGeneratedColumn()
   id: number;
 

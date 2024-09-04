@@ -1,21 +1,10 @@
 {
-<<<<<<< HEAD
-  "dfx": "0.20.1",
-
-  "canisters": {
-    "VIBE_backend": {
-      "build": "npx azle VIBE_backend",
-      "candid": "src/VIBE_backend/VIBE_backend.did",
-      "gzip": true,
-      "main": "src/VIBE_backend/src/index.ts",
-=======
   "canisters": {
     "vibe_backend": {
       "build": "npx azle vibe_backend",
       "candid": "src/vibe_backend/vibe_backend.did",
       "gzip": true,
       "main": "src/vibe_backend/src/index.ts",
->>>>>>> a118206 (Initial commit.)
       "tech_stack": {
         "cdk": {
           "azle": {}
@@ -26,25 +15,6 @@
         }
       },
       "type": "custom",
-<<<<<<< HEAD
-      "wasm": ".azle/VIBE_backend/VIBE_backend.wasm"
-    },
-    "app": {
-        "frontend": {
-          "entrypoint": "out/index.html"
-        },
-        "source": ["out"],
-        "type": "assets"
-      }
-  },
-  "networks": {
-    "local": {
-        "bind": "0.0.0.0:8000",
-        "type": "ephemeral"
-    }
-  },
-
-=======
       "wasm": ".azle/vibe_backend/vibe_backend.wasm"
     },
     "vibe_frontend": {
@@ -58,7 +28,6 @@
       "workspace": "vibe_frontend"
     }
   },
->>>>>>> a118206 (Initial commit.)
   "defaults": {
     "build": {
       "args": "",

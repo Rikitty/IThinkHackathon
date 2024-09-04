@@ -5,6 +5,9 @@ import { User } from './user';
   name: 'Event',
 })
 export class Event extends BaseEntity {
+  static findOneBy(arg0: { id: number; }) {
+    throw new Error("Method not implemented.");
+  }
   @PrimaryGeneratedColumn()
   id: number;
 

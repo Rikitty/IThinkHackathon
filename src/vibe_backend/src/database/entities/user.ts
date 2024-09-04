@@ -4,6 +4,9 @@ import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
   name: 'User',
 })
 export class User extends BaseEntity {
+  static findOneBy(arg0: { principal_id: string; }) {
+    throw new Error("Method not implemented.");
+  }
   @PrimaryGeneratedColumn()
   id: number;
 
