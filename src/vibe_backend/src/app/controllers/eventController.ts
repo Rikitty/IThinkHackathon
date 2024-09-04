@@ -26,7 +26,7 @@ export default class EventController {
         principal_id: ic.caller().toText(),
       });
 
-      if (!findUser) {
+      if (findUser === null) {
         response.status(400);
         return response.json({
           status: 0,
@@ -53,11 +53,11 @@ export default class EventController {
       };
 
       await Event.save(eventData);
-    } catch (error: Error) {
+    } catch (error: any) {
       response.status(400);
       return response.json({
         status: "error",
-        message: error.message,
+        message: error?.message,
       });
     }
   }
@@ -83,7 +83,7 @@ export default class EventController {
         principal_id: ic.caller().toText(),
       });
 
-      if (!findUser) {
+      if (findUser === null) {
         response.status(400);
         return response.json({
           status: 0,
@@ -99,7 +99,7 @@ export default class EventController {
         user: findUser,
       });
 
-      if (!findEvent) {
+      if (findEvent === null) {
         response.status(400);
         return response.json({
           status: 0,
@@ -131,11 +131,11 @@ export default class EventController {
         status: 1,
         message: "Event updated successfully!",
       });
-    } catch (error) {
+    } catch (error: any) {
       response.status(400);
       return response.json({
         status: 0,
-        message: error.message,
+        message: error?.message,
       });
     }
   }
@@ -149,7 +149,7 @@ export default class EventController {
         principal_id: ic.caller().toText(),
       });
 
-      if (!findUser) {
+      if (findUser === null) {
         response.status(400);
         return response.json({
           status: 0,
@@ -163,7 +163,7 @@ export default class EventController {
         user: findUser,
       });
 
-      if (!findEvent) {
+      if (findEvent === null) {
         response.status(400);
         return response.json({
           status: 0,
@@ -179,11 +179,11 @@ export default class EventController {
         status: 1,
         message: "Event deleted successfully!",
       });
-    } catch (error) {
+    } catch (error: any) {
       response.status(400);
       return response.json({
         status: 0,
-        message: error.message,
+        message: error?.message,
       });
     }
   }

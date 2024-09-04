@@ -15,7 +15,7 @@ export default class UserController {
         principal_id: ic.caller().toText(),
       });
 
-      if (!user) {
+      if (user === null) {
         response.status(404);
         return response.json({
           status: 0,
@@ -31,7 +31,7 @@ export default class UserController {
       response.status(400);
       return response.json({
         status: 0,
-        message: error.message,
+        message: error?.message,
       });
     }
   }
@@ -83,7 +83,7 @@ export default class UserController {
         response.status(400);
         return response.json({
           status: 0,
-          message: error.message,
+          message: error?.message,
         });
       }
   }
@@ -106,7 +106,7 @@ export default class UserController {
     try {
       const user = await User.findOneBy({ email });
 
-      if (!user) {
+      if (user === null) {
         return response.status(400).json({
           status: 0,
           message: "Invalid email or password.",
@@ -133,7 +133,7 @@ export default class UserController {
     } catch (error: any) {
       return response.status(500).json({
         status: 0,
-        message: error.message,
+        message: error?.message,
       });
     }
   }
