@@ -12,9 +12,9 @@ export default class EventController {
         request.body
       );
 
-      if (!success) {
+      if (success === null) {
         response.status(400);
-        const { path, message } = error.issues?.[0];
+        const { path, message } = (error as any)?.issues?.[0];
 
         return response.json({
           status: 0,
@@ -26,7 +26,7 @@ export default class EventController {
         principal_id: ic.caller().toText(),
       });
 
-      if (!findUser) {
+      if (findUser === null) {
         response.status(400);
         return response.json({
           status: 0,
@@ -35,7 +35,7 @@ export default class EventController {
       }
 
       // check by title since ID is primary generated
-      const findEvent = await Event.findOneBy({ title: data.title });
+      const findEvent = await Event.findOneBy({ title: data?.title });
 
       if (findEvent) {
         response.status(400);
@@ -47,13 +47,13 @@ export default class EventController {
 
       const eventData: Partial<Event> = {
         ...data,
-        startDate: data.startDate.toString(),
-        endDate: data.endDate.toString(),
-        user: findUser,
+        startDate: data?.startDate.toString(),
+        endDate: data?.endDate.toString(),
+        user: findUser || undefined,
       };
 
       await Event.save(eventData);
-    } catch (error: Error) {
+    } catch (error) {
       response.status(400);
       return response.json({
         status: "error",
@@ -83,7 +83,7 @@ export default class EventController {
         principal_id: ic.caller().toText(),
       });
 
-      if (!findUser) {
+      if (findUser === null) {
         response.status(400);
         return response.json({
           status: 0,
@@ -96,7 +96,7 @@ export default class EventController {
 
       const findEvent = await Event.findOneBy({
         id: eventId as unknown as number,
-        user: findUser,
+        user: findUser || undefined,
       });
 
       if (!findEvent) {

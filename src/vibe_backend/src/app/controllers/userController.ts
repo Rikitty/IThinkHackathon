@@ -15,7 +15,7 @@ export default class UserController {
         principal_id: ic.caller().toText(),
       });
 
-      if (!user) {
+      if (user === null) {
         response.status(404);
         return response.json({
           status: 0,

@@ -13,7 +13,7 @@ export default class LikeController {
         principal_id: ic.caller().toText(),
       });
 
-      if (!user) {
+      if (user === null) {
         return response.status(404).json({
           status: 0,
           message: "User not found.",
@@ -22,7 +22,7 @@ export default class LikeController {
 
       const event = await Event.findOneBy({ id: parseInt(eventId) });
 
-      if (!event) {
+      if (event === null) {
         return response.status(404).json({
           status: 0,
           message: "Event not found.",
@@ -65,7 +65,7 @@ export default class LikeController {
         principal_id: ic.caller().toText(),
       });
 
-      if (!user) {
+      if (user === null) {
         return response.status(404).json({
           status: 0,
           message: "User not found.",
@@ -74,7 +74,7 @@ export default class LikeController {
 
       const event = await Event.findOneBy({ id: parseInt(eventId) });
 
-      if (!event) {
+      if (event === null) {
         return response.status(404).json({
           status: 0,
           message: "Event not found.",
@@ -84,7 +84,7 @@ export default class LikeController {
       // Find and remove the like
       const like = await Like.findOneBy({ user, event });
 
-      if (!like) {
+      if (like === null) {
         return response.status(400).json({
           status: 0,
           message: "You have not liked this event.",
